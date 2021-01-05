@@ -34,7 +34,8 @@
 					<li class="layui-nav-item layui-nav-itemed" th:each="resource:${resource}" >
 					  <a class="" href="javascript:;" th:text="${resource.resourceName}">所有商品</a>
 					  <dl class="layui-nav-child" th:if="${resource.subs} ne null" th:each="sub:${resource.subs}">
-						<dd><a href="javascript:;" th:text="${sub.resourceName}">列表一</a></dd>
+						<dd><a th:href="'javascript:showTab(\''+${sub.url}+'\',\''+${sub.resourceName}+'\','+${sub.resourceId}+');'"
+							   th:text="${sub.resourceName}">列表一</a></dd>
 					  </dl>
 					</li>
 					<li class="layui-nav-item">
@@ -69,5 +70,7 @@
 		</div>
 	</div>
 	<script th:src="@{/webjars/layui/layui.all.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.js}"></script>
+	<script th:src="@{/js/login/main.js}"></script>
 </body>
 </html>
