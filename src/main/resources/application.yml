@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/coal_db?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=GMT%2B8
+    username: root
+    password: password
+#开发时，设置false，thymeleaf修改页面时及时看到效果，之后在修改成true
+  thymeleaf:
+    cache: false
+
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  mapper-locations: classpath:mapper/coal/*Mapper.xml
+  type-aliases-package: com.zm.coal.entity
+#日志
+logging:
+  level:
+    com.zm.coal.mapper: trace
