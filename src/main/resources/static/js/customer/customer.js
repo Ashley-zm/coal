@@ -20,5 +20,4 @@ table.render({
         {field: 'createTime', title: '创建时间'},
         {title: '操作', toolbar: '#barDemo'}
     ]]
-
 })

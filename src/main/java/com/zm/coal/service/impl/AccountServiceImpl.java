@@ -24,7 +24,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         LoginDTO loginDTO = new LoginDTO();
         //重定向根目录
         loginDTO.setPath("redirect:/");
-        //链式
+        //条件查询，方法引用
         Account account = lambdaQuery().eq(Account::getUsername, username).one();
         if (account == null) {
             loginDTO.setError("用户名不存在！");
@@ -32,7 +32,7 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         }
         MD5 md5 = new MD5(account.getSalt().getBytes());
         String s = md5.digestHex(password);
-        if (!s.equals(account.getPassword())){
+        if (!s.equals(account.getPassword())) {
             loginDTO.setError("密码错误！");
             return loginDTO;
         }
