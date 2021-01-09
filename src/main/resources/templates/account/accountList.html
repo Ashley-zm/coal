@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="../layui/css/layui.css">
+	<meta charset="UTF-8">
+	<link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
 </head>
+
 <body>
 
 	<div class="layui-form-item">
@@ -18,8 +20,7 @@
 		<div class="layui-inline">
 			<label class="layui-form-label">邮箱</label>
 			<div class="layui-input-inline" style="width: 200px;">
-				<input type="text" id="email" autocomplete="off"
-					class="layui-input">
+				<input type="text" id="email" autocomplete="off" class="layui-input">
 			</div>
 		</div>
 
@@ -41,9 +42,8 @@
 	<button class="layui-btn">增加</button>
 
 	<table id="accountList" lay-filter="test"></table>
-
-	<script src="../jquery/jquery.js"></script>
-	<script src="../layui/layui.all.js"></script>
+	<script th:src="@{/webjars/layui/layui.all.js}"></script>
+	<script th:src="@{/webjars/jquery/jquery.js}"></script>
 
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
@@ -51,4 +51,5 @@
   		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 	</script>
 </body>
+
 </html>
