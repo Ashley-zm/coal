@@ -31,6 +31,14 @@ public class Account extends BaseEntity {
     private Long roleId;
 
     /**
+     * 角色名称(不在account表中，使用注解
+     *     @TableField(exist = false)
+     *     这样就不会自动映射了。)
+     */
+    @TableField(exist = false)
+    private String roleName;
+
+    /**
      * 用户名
      */
     private String username;

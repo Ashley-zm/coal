@@ -7,7 +7,7 @@
 </head>
 
 <body>
-	<form class="layui-form" id="addForm" method="post">
+	<form class="layui-form" id="addForm" method="post" th:action="@{/account}">
 		<div class="layui-form-item">
 			<label class="layui-form-label">用户名</label>
 			<div class="layui-input-block">
@@ -34,6 +34,8 @@
 			<div class="layui-input-block">
 				<select name="roleId" lay-verify="required">
 					<option value="">--请选择--</option>
+					<option value="" th:each="role:${roles}" th:value="${role.roleId}"
+					th:text="${role.roleName}">--请选择--</option>
 				</select>
 			</div>
 		</div>

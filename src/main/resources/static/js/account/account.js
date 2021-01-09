@@ -70,9 +70,9 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
-    let customerId = data.customerId;
+    let accountId = data.accountId;
     if (layEvent === 'detail') { //查看
-        openlayer('/account/toDetail/' + accountId, '账号詳情');
+        openlayer('/account/toDetail/' + accountId, '账号详情');
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
             layer.close(index);

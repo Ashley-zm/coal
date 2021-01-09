@@ -1,6 +1,9 @@
 package com.zm.coal.service.impl;
 
 import cn.hutool.crypto.digest.MD5;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zm.coal.dto.LoginDTO;
 import com.zm.coal.entity.Account;
 import com.zm.coal.mapper.AccountMapper;
@@ -40,5 +43,16 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         //成功跳转到主页面
         loginDTO.setPath("login/main");
         return loginDTO;
+    }
+
+    /**
+     * 分页查询账号
+     * @param page
+     * @param wrapper
+     * @return
+     */
+    @Override
+    public IPage<Account> accountPage(Page<Account> page, Wrapper<Account> wrapper) {
+        return baseMapper.accountPage(page,wrapper);
     }
 }

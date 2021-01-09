@@ -1,56 +1,62 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
 </head>
 
 <body>
 
-	<div class="layui-form-item">
+<div class="layui-form-item">
 
-		<div class="layui-inline">
-			<label class="layui-form-label">真实姓名</label>
-			<div class="layui-input-inline" style="width: 200px;">
-				<input type="text" id="realName" autocomplete="off" class="layui-input">
-			</div>
-		</div>
+    <div class="layui-inline">
+        <label class="layui-form-label">真实姓名</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" id="realName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<label class="layui-form-label">邮箱</label>
-			<div class="layui-input-inline" style="width: 200px;">
-				<input type="text" id="email" autocomplete="off" class="layui-input">
-			</div>
-		</div>
+    <div class="layui-inline">
+        <label class="layui-form-label">邮箱</label>
+        <div class="layui-input-inline" style="width: 200px;">
+            <input type="text" id="email" autocomplete="off" class="layui-input">
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<label class="layui-form-label">创建时间</label>
-			<div class="layui-input-inline">
-				<input type="text" class="layui-input" id="createTimeRange" placeholder=" - ">
-			</div>
-		</div>
+    <div class="layui-inline">
+        <label class="layui-form-label">创建时间</label>
+        <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="createTimeRange" placeholder=" - ">
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<div class="layui-input-inline">
-				<button class="layui-btn">查询</button>
-			</div>
-		</div>
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <button class="layui-btn" th:onclick="query()">查询</button>
+        </div>
+    </div>
 
-	</div>
+</div>
 
-	<button class="layui-btn" onclick="toAdd()">增加</button>
+<div id="toolbar">
+    <button class="layui-btn" onclick="toAdd()">增加</button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" onclick="location.reload()"><i
+            class="layui-icon">&#xe9aa;</i>刷新
+    </button>
+</div>
 
-	<table id="accountList" lay-filter="userTable"></table>
-	<script th:src="@{/webjars/layui/layui.all.js}"></script>
-	<script th:src="@{/webjars/jquery/jquery.js}"></script>
-	<script th:src="@{/js/customer/customer.js}"></script>
-	<script th:src="@{/js/common.js}"></script>
 
-	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
- 		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-	</script>
+<table id="accountList" lay-filter="userTable"></table>
+<script th:src="@{/webjars/layui/layui.all.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.js}"></script>
+<script th:src="@{/js/account/account.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 </body>
 
 </html>
