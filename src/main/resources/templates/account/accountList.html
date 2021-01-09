@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
@@ -39,11 +38,13 @@
 
 	</div>
 
-	<button class="layui-btn">增加</button>
+	<button class="layui-btn" onclick="toAdd()">增加</button>
 
-	<table id="accountList" lay-filter="test"></table>
+	<table id="accountList" lay-filter="userTable"></table>
 	<script th:src="@{/webjars/layui/layui.all.js}"></script>
 	<script th:src="@{/webjars/jquery/jquery.js}"></script>
+	<script th:src="@{/js/customer/customer.js}"></script>
+	<script th:src="@{/js/common.js}"></script>
 
 	<script type="text/html" id="barDemo">
   		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
