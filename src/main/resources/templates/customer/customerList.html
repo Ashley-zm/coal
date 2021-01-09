@@ -1,47 +1,64 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8" >
-<link rel="stylesheet"th:href="@{/webjars/layui/css/layui.css}">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
 </head>
 <body>
+<div class="layui-form-item">
 
-	<div class="layui-form-item">
+    <div class="layui-inline">
+        <label class="layui-form-label">姓名</label>
+        <div class="layui-input-inline" style="width: 150px;">
+            <input type="text" id="realName" autocomplete="off" class="layui-input">
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<label class="layui-form-label">真实姓名</label>
-			<div class="layui-input-inline" style="width: 150px;">
-				<input type="text" id="realName" autocomplete="off" class="layui-input">
-			</div>
-		</div>
+    <div class="layui-inline">
+        <label class="layui-form-label">手机号码</label>
+        <div class="layui-input-inline" style="width: 150px;">
+            <input type="text" id="phone" autocomplete="off"
+                   class="layui-input">
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<label class="layui-form-label">手机号码</label>
-			<div class="layui-input-inline" style="width: 150px;">
-				<input type="text" id="phone" autocomplete="off"
-					class="layui-input">
-			</div>
-		</div>
+    <div class="layui-inline">
+        <div class="layui-input-inline">
+            <button class="layui-btn" onclick="query()"><i
+                    class="layui-icon">&#xe615;</i></button>
+        </div>
+    </div>
 
-		<div class="layui-inline">
-			<div class="layui-input-inline">
-				<button class="layui-btn">查询</button>
-			</div>
-		</div>
+</div>
+<!-- 头部工具栏按钮开始 -->
+<!--         在此处添加lay-event事件（add，delete） -->
+<!--<script type="text/html" id="toolbar">-->
+<!--    <div class="layui-btn-container" >-->
+<div id="toolbar">
+    <button type="button" class="layui-btn layui-btn-sm " onclick="toAdd()">添加客户</button>
+    <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete"><i
+            class="layui-icon"></i>批量删除
+    </button>
+    <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" lay-event="refresh"><i
+            class="layui-icon">&#xe9aa;</i>刷新
+    </button>
+</div>
+<!--// </script>-->
+<!-- 头部工具栏按钮开始结束 -->
 
-	</div>
+<table class="layui-hide" id="customerList" lay-filter="userTable"></table>
 
-	<button class="layui-btn">增加</button>
 
-	<table id="customerList"></table>
-
-	<script th:src="@{/webjars/layui/layui.all.js}"></script>
-	<script th:src="@{/webjars/jquery/jquery.js}"></script>
-	<script th:src="@{/js/customer/customer.js}"></script>
-	<script type="text/html" id="barDemo">
-  		<a class="layui-btn layui-btn-xs" lay-event="detail">查看</a>
- 		<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
-  		<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-	</script>
+<script th:src="@{/webjars/layui/layui.all.js}"></script>
+<script th:src="@{/webjars/jquery/jquery.js}"></script>
+<script th:src="@{/js/customer/customer.js}"></script>
+<script th:src="@{/js/common.js}"></script>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="detail">查看</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
 </body>
 </html>
