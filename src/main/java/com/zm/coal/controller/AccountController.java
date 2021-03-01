@@ -78,7 +78,8 @@ public class AccountController {
 
     /**
      * 进入新增页accountAdd页面
-     *
+     * 新增账号时，涉及到账号的角色类型（多表）
+     * @param model
      * @return
      */
     @GetMapping("toAdd")

@@ -53,7 +53,7 @@ public class CustomerController {
     @ResponseBody
     public R<Map<String,Object>> list(String realName,String phone,Long page,Long limit){
         LambdaQueryWrapper<Customer> wrapper = Wrappers.<Customer>lambdaQuery()
-                .like(StringUtils.isNotBlank(realName), Customer::getRealName, realName)
+                .like(StringUtils.isNotBlank(realName), Customer::getCustomerName, realName)
                 .like(StringUtils.isNotBlank(phone), Customer::getPhone, phone)
                 .orderByDesc(Customer::getCustomerId);
         Page<Customer> myPage = customerService.page(new Page<>(page, limit), wrapper);

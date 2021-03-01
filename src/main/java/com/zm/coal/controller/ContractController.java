@@ -10,17 +10,23 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zm.coal.entity.Account;
 import com.zm.coal.entity.Contract;
 import com.zm.coal.entity.Customer;
+import com.zm.coal.entity.Product;
 import com.zm.coal.query.ContractQuery;
+import com.zm.coal.service.AccountService;
 import com.zm.coal.service.ContractService;
+import com.zm.coal.service.CustomerService;
+import com.zm.coal.service.ProductService;
 import com.zm.coal.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,6 +44,15 @@ public class ContractController {
 
     @Autowired
     private ContractService contractService;
+
+    @Autowired
+    private CustomerService customerService;
+
+    @Autowired
+    private AccountService accountService;
+
+    @Autowired
+    private ProductService productService;
 
     /**
      * 跳转到账户列表页
@@ -92,6 +107,22 @@ public class ContractController {
         }
         IPage<Contract> contractIPage = contractService.contractPage(new Page<>(query.getPage(), query.getLimit()), wrapper);
         return ResultUtil.buildPageR(contractIPage);
+    }
+
+    /**
+     * 创建合同时需要选择客户及账户人
+     * @param model
+     * @return
+     */
+    @GetMapping("toAdd")
+    public String toAdd(Model model) {
+        List<Customer> customers = customerService.list(Wrappers.<Customer>lambdaQuery().orderByAsc(Customer::getCustomerId));
+        List<Account> accounts = accountService.list(Wrappers.<Account>lambdaQuery().orderByAsc(Account::getAccountId));
+        List<Product> products = productService.list(Wrappers.<Product>lambdaQuery().orderByAsc(Product::getProductId));
+        model.addAttribute("customers",customers);
+        model.addAttribute("accounts",accounts);
+        model.addAttribute("products",products);
+        return "contract/contractAdd";
     }
 
 }

@@ -34,7 +34,7 @@ public class Customer extends BaseEntity {
     /**
      * 真实姓名
      */
-    private String realName;
+    private String customerName;
 
     /**
      * 性别

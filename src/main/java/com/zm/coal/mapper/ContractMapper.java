@@ -13,6 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * @Date 2021/2/21 14:13
  * @Version 1.0
  */
+
 public interface ContractMapper  extends BaseMapper<Contract>  {
     /**
      * 分页查询合同

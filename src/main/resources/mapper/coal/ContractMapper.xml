@@ -7,10 +7,13 @@
         select
         c.*,
         a.real_name,
-        u.customer_name
+        u.customer_name,
+		p.product_name,
+		p.price
         from contract c
         inner join account a on c.account_id= a.account_id
         inner join customer u on c.customer_id=u.customer_id
+        inner join product p on c.product_id=p.product_id
         ${ew.customSqlSegment}
     </select>
 </mapper>

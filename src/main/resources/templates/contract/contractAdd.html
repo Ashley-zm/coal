@@ -7,6 +7,163 @@
     <link rel="stylesheet" th:href="@{/css/public.css}">
 </head>
 <body>
+<form class="layui-form " id="addForm" method="post" th:action="@{/contract}">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">合同编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="contractCode" placeholder="请输入合同编号" autocomplete="off" class="layui-input"
+                   lay-verify="required" maxlength="20">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">客户姓名</label>
+        <div class="layui-input-block">
+            <select name="customerName" lay-verify="required">
+                <option value="">--请选择--</option>
+                <option value="" th:each="customer:${customers}" th:value="${customer.customerId}"
+                        th:text="${customer.customerName}">
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">合同名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="contractName" placeholder="请输入合同名称" autocomplete="off" class="layui-input"
+                   lay-verify="required" maxlength="50">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">销售人</label>
+        <div class="layui-input-block">
+            <select name="realName" lay-verify="required">
+                <option value="">--请选择销售人--</option>
+                <option value="" th:each="account:${accounts}" th:value="${account.accountId}"
+                        th:text="${account.realName}">--请选择--
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称</label>
+        <div class="layui-input-block">
+            <select lay-verify="required">
+                <option value="">--请选择产品--</option>
+                <option id="price" th:each="product:${products}" th:value="${product.productId}"
+                        th:text="${product.productName}+'-'+${product.price}">--请选择--
+                </option>
+            </select>
+        </div>
+    </div>
 
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品总数量</label>
+        <div class="layui-input-block">
+            <input type="number" name="amount" placeholder="请输入产品总数量" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="zong" onkeyup="sum();" maxlength="100">吨
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="productName" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="prod" maxlength="100">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品单价</label>
+        <div class="layui-input-block">
+            <input type="number" name="price" placeholder="请输入产品单价" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="dan"
+                   maxlength="100">元/吨
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品总价</label>
+        <div class="layui-input-block">
+            <input type="number" name="total" placeholder="请输入产品总价" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="he"
+                   maxlength="100">元
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">创建时间</label>
+        <div class="layui-inline">
+            <input class="layui-input" id="effectiveTime" name="effectiveTime" placeholder="创建时间">
+        </div>
+    </div>
+    <div class="layui-form-pane" style="margin-top: 15px;">
+        <div class="layui-form-item">
+            <label class="layui-form-label" required>合同有效有效期</label>
+            <div class="layui-input-inline">
+                <input name="effectiveTime" class="layui-input" placeholder="合同有效开始日" id="LAY_demorange_s"
+                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+            </div>
+            <div class="layui-input-inline">
+                <input name="expireTime" class="layui-input" placeholder="合同有效截止日" id="LAY_demorange_e"
+                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="addSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    //日期时间选择器
+    laydate.render({
+        elem: '#effectiveTime'
+        ,type: 'datetime'
+        ,trigger: 'click'
+        ,format:  'yyyy年MM月dd日 HH时mm分ss秒'
+    });
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        var start = {
+            min: '2021-03-01 20:08:08'
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+
+        var end = {
+            min: '2021-03-01 20:08:08'
+            , max: '2099-06-16 23:59:59'
+            , istoday: false
+            , choose: function (datas) {
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+
+        document.getElementById('LAY_demorange_s').onclick = function () {
+            start.elem = this;
+            laydate(start);
+        }
+        document.getElementById('LAY_demorange_e').onclick = function () {
+            end.elem = this
+            laydate(end);
+        }
+
+    });
+</script>
+<script>
+    var price = document.getElementById("price").textContent;
+
+    function sum() {
+        console.log(price);
+        var danjia = price.match(/\d+(.\d+)?/g);
+        document.getElementById("prod").value = price.replace(/[^\u4e00-\u9fa5]/gi, "");
+        document.getElementById("dan").value = danjia[0];
+        setTimeout(function () {
+            document.getElementById("he").value = document.getElementById("dan").value * document.getElementById("zong").value;
+        }, 500)
+    }
+</script>
 </body>
 </html>

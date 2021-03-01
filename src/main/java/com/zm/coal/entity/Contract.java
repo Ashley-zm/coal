@@ -68,19 +68,25 @@ public class Contract extends BaseEntity{
     private String customerName;
 
     /**
-     * 产品名称
+     * 产品名称(不在contract表中，使用注解
+     *     @TableField(exist = false)
+     *     这样就不会自动映射了。)
      */
+    @TableField(exist = false)
     private String productName;
+
+    /**
+     * 产品单价(不在contract表中，使用注解
+     *     @TableField(exist = false)
+     *     这样就不会自动映射了。)
+     */
+    @TableField(exist = false)
+    private double price;
 
     /**
      * 数量
      */
-    private int amount;
-
-    /**
-     * 单价
-     */
-    private double price;
+    private double amount;
 
     /**
      * 总价

@@ -3,6 +3,50 @@ layui.laydate.render({
     range: true,
     //2020-11-12 - 2020-11-20
 });
+ layui.use(["jquery", 'form', 'layer'],
+    function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+        //自定义验证规则
+        form.verify({
+            nikename: function (value) {
+                if (value.length < 5) {
+                    return '昵称至少得5个字符啊';
+                }
+            },
+            len: function (value) {
+                if (value<0) {
+                    return '数值必须大于零';
+                }
+            },
+            passw: [/(.+){6,12}$/, '密码必须6到12位'],
+            repass: function (value) {
+                if ($('#L_pass').val() != $('#L_repass').val()) {
+                    return '两次密码不一致';
+                }
+            },
+            otherReq: function (value, item) {
+                var $ = layui.$;
+                var verifyName = $(item).attr('name')
+                    , verifyType = $(item).attr('type')
+                    , formElem = $(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
+                    , verifyElem = formElem.find('input[name=' + verifyName + ']')//获取需要校验的元素
+                    , isTrue = verifyElem.is(':checked')//是否命中校验
+                    , focusElem = verifyElem.next().find('i.layui-icon'); //焦点元素
+                if (!isTrue || !value) {
+                    //定位焦点
+                    focusElem.css(verifyType == 'radio' ? {"color": "#FF5722"} : {"border-color": "#FF5722"});
+                    //对非输入框设置焦点
+                    focusElem.first().attr("tabIndex", "1").css("outline", "0").blur(function () {
+                        focusElem.css(verifyType == 'radio' ? {"color": ""} : {"border-color": ""});
+                    }).focus();
+                    return '必填项不能为空';
+                }
+            }
+        });
+    }
+);
 var table = layui.table;
 //执行渲染
 var tableIns = table.render({
@@ -23,11 +67,11 @@ var tableIns = table.render({
     },
     cols: [[//表头
         {type: 'checkbox', fixed: 'left'},
-        {field: 'contractCode', title: '合同编号', align: 'center', width: 90, color: '#14A193'},
+        {field: 'contractCode', title: '合同编号', align: 'center', width: 90},
         {field: 'customerName', title: '客户姓名', align: 'center', width: 90},
         {field: 'contractName', title: '合同名称', align: 'center', width: 180},
         {field: 'realName', title: '销售人', align: 'center', width: 80},
-        {field: 'productName', title: '产品名称', align: 'center', width: 90},
+        {field: 'productName', title: '产品名称', align: 'center', width: 100},
         {
             field: 'amount', title: '总数量', sort: true, align: 'center', width: 100, templet: function (a) {
                 return a.amount + '吨'
@@ -38,14 +82,6 @@ var tableIns = table.render({
                 return a.price + '元/吨'
             }
         },
-        // {
-        //     field: 'p', title: 'test', align: 'center', width: 80,
-        //     templet: function (a) {
-        //         a.p = (a.amount * a.price) / 10000;
-        //         a.p = a.p + "万元";
-        //         return a.p
-        //     }
-        // },
         {
             field: 'total', title: '总价', sort: true, align: 'center', width: 90, templet: function (a) {
                 a.total = a.total / 10000;
@@ -170,7 +206,16 @@ function query() {
  * 进入新增页
  */
 function toAdd() {
-    openlayer('/contract/toAdd', '新增账号');
+    $.ajaxSettings.async = false;
+    $.get('/contract/toAdd', function (res) {
+        layer.open({
+            type: 1,//0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+            title: '创建合同',
+            area: ['100%', '100%'],//宽高
+            content: res
+        });
+    });
+    $.ajaxSettings.async = true;
     //渲染radio
     layui.form.render();
     mySubmit('addSubmit', 'POST');
