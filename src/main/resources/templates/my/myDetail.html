@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+</head>
+
+<body>
+<div class="layui-col-md12">
+    <div class="layui-card">
+        <div class="layui-card-header">设置我的资料</div>
+        <div class="layui-card-body" pad15="">
+            <form class="layui-form"  id="updateForm" th:object="${account}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名</label>
+                    <div class="layui-input-block">
+                        <input type="hidden" name="accountId" th:value="*{accountId}">
+                        <input type="text" name="username" placeholder="请输入用户名" autocomplete="off" class="layui-input"
+                               lay-verify="required|checkUsername" th:value="*{username}" maxlength="20">
+                    </div>
+
+                    <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>
+                </div>
+
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <select name="roleId" lay-verify="required">
+                            <option value="">--请选择--</option>
+                            <option value="" th:each="role:${roles}" th:value="${role.roleId}"
+                                    th:text="${role.roleName}"
+                                    th:selected="${role.roleId==account.roleId}"></option>
+                        </select>
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">当前角色不可更改为其它角色</div>
+                </div>
+<!--                <div class="layui-form-item">-->
+<!--                    <label class="layui-form-label">用户名</label>-->
+<!--                    <div class="layui-input-inline">-->
+<!--                        <input type="text" name="username" value="xianxin" readonly="" class="layui-input">-->
+<!--                    </div>-->
+<!--                    <div class="layui-form-mid layui-word-aux">不可修改。一般用于后台登入名</div>-->
+<!--                </div>-->
+                <div class="layui-form-item">
+                    <label class="layui-form-label">真实姓名</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="nickname" th:value="*{realName}" lay-verify="nickname" autocomplete="off"
+                               placeholder="请输入真实姓名" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">性别</label>
+                    <div class="layui-input-block">
+                        <input type="radio" name="sex" value="男" th:checked="*{sex=='男'}" title="男">
+                        <input type="radio" name="sex" value="女" th:checked="*{sex=='女'}"title="女">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">邮箱</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="email" placeholder="请输入邮箱" autocomplete="off"
+                               class="layui-input" lay-verify="email" th:value="*{email}" maxlength="100">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="updateSubmit">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit="" lay-filter="setmyinfo">确认修改</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重新填写</button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

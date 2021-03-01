@@ -4,6 +4,7 @@ import com.zm.coal.entity.Account;
 import lombok.Data;
 
 /**
+ * 登录失败或成功跳转的页面
  * @Author ZhuMei
  * @Date 2021/1/4 21:52
  * @Version 1.0

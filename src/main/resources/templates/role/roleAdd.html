@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 <body>
-	<form class="layui-form">
+	<form class="layui-form" id="addForm"
+		  method="post" th:action="@{/role}">
 		<div class="layui-form-item">
 			<label class="layui-form-label">角色名称</label>
 			<div class="layui-input-block">

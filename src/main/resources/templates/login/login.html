@@ -34,8 +34,17 @@
                                    class="layui-input" maxlength="20" value="123456">
                         </div>
                     </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">验证码</label>
+                        <div class="layui-input-block">
+                            <input type="veriCode" name="veriCode" required
+                                   lay-verify="required" placeholder="请输入验证码" autocomplete="off"
+                                   class="layui-input" maxlength="20" >
+                            <img th:src="@{/auth/captcha}" alt="">
+                        </div>
+                    </div>
                     <div class="layui-form-item" th:if="${not #strings.isEmpty(error)}">
-                        <font color="#dc143c" th:text="${error}"></font>
+                        <span th:text="${error}" style="color: #dc143c; "></span>
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-block">

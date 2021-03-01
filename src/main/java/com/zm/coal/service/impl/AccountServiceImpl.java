@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> implements AccountService {
 
     @Override
-    public LoginDTO login(String username, String password) {
+    public LoginDTO login(String username, String password,boolean code) {
         LoginDTO loginDTO = new LoginDTO();
         //重定向根目录
         loginDTO.setPath("redirect:/");
@@ -37,6 +37,11 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
         String s = md5.digestHex(password);
         if (!s.equals(account.getPassword())) {
             loginDTO.setError("密码错误！");
+            return loginDTO;
+        }
+        //验证码的true或者false
+        while (!code){
+            loginDTO.setError("验证码错误！");
             return loginDTO;
         }
         loginDTO.setAccount(account);
@@ -54,5 +59,10 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     @Override
     public IPage<Account> accountPage(Page<Account> page, Wrapper<Account> wrapper) {
         return baseMapper.accountPage(page,wrapper);
+    }
+
+    @Override
+    public Account getAccountById(Long id) {
+        return baseMapper.selectAccountById(id);
     }
 }

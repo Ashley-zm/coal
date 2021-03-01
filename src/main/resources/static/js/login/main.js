@@ -19,3 +19,20 @@ function showTab(url, name, id) {
     }
     element.tabChange("menu", id);
 }
+$(function () {
+    console.log($("#myId").val());
+    localStorage.setItem("accountId", $("#myId").val());
+})
+function update(){
+    showTab('/my/toDetail/' + $("#myId").val(),'账号详情',$("#myId").val());
+    $.ajaxSettings.async = false;
+    $.get('/my/toDetail/', function (res) {
+        layer.open({
+            type: 1,
+            title: 账号详情,
+            area: ['800px', '450px'],//宽高
+            content: res
+        });
+    });
+    $.ajaxSettings.async = true;
+}

@@ -1,4 +1,3 @@
-
 /**
  * 公共弹出层
  * $.ajaxSettings.async=false;//先设置为同步，使openlayer方法执行完，之后再异步。
@@ -23,8 +22,11 @@ function openlayer(url, title) {
  * @param filter
  * @param type
  */
-function mySubmit(filter, type) {
+function mySubmit(filter, type, func) {
     layui.form.on('submit(' + filter + ')', function (data) {
+        if (typeof (func) != 'undefined') {
+            func(data.field);
+        }
         console.log(data.elem);
         console.log(data.form);
         console.log(data.field);
@@ -52,7 +54,7 @@ function mySubmit(filter, type) {
  * 公共删除方法
  * @param url
  */
-function myDelete(url){
+function myDelete(url) {
     $.ajax({
         url: url,
         async: false,
@@ -66,4 +68,17 @@ function myDelete(url){
 
         }
     });
+}
+
+var addIds = function (field) {
+    let checkedData = layui.tree.getChecked('resource');
+    field.resourceIds = getIds(checkedData, [])
+}
+
+function getIds(checkedData, arr) {
+    for (let i in checkedData) {
+        arr.push(checkedData[i].id);
+        arr = getIds(checkedData[i].children, arr)
+    }
+    return arr;
 }

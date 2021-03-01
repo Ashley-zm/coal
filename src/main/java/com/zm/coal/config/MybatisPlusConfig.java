@@ -1,6 +1,7 @@
 package com.zm.coal.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
+import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,15 @@ public class MybatisPlusConfig {
 //        addInnerInterceptor分页查询的拦截器
         interceptor.addInnerInterceptor(new PaginationInnerInterceptor(DbType.MYSQL));
         return interceptor;
+    }
+
+    /**
+     * 自定义SQL注入器
+     * @return
+     */
+    @Bean
+    public DefaultSqlInjector sqlInjector(){
+        return new MySqlInjector();
     }
 
 

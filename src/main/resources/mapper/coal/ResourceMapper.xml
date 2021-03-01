@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zm.coal.mapper.ResourceMapper">
-<!--查询当前登录人的资源-->
+    <!--查询当前登录人的资源-->
     <select id="listResource" resultType="com.zm.coal.vo.ResourceVO">
         select
             re.resource_id,
@@ -9,6 +9,15 @@
             re.url
         from resource re inner join role_resource rr
         on re.resource_id = rr.resource_id
+        ${ew.customSqlSegment}
+    </select>
+    <select id="listResourceByRoleId" resultType="com.zm.coal.vo.TreeVO">
+         select
+            re.resource_id id,
+            re.resource_name title,
+            if(rr.resource_id is null,false,true )checked
+        from resource re left join role_resource rr
+        on re.resource_id = rr.resource_id and rr.role_id=#{roleId}
         ${ew.customSqlSegment}
     </select>
 </mapper>

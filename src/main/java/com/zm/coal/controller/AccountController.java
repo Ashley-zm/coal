@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -53,8 +54,9 @@ public class AccountController {
 
     /**
      * 查询账号列表
-     * 查询条件封装成AccountQuery对象
+     * 查询条件封装成AccountQuery对象 query/AccountQuery
      *
+     * @param query
      * @return
      */
     @GetMapping("list")
@@ -95,6 +97,17 @@ public class AccountController {
     @PostMapping
     @ResponseBody
     public R<Object> add(@RequestBody Account account) {
+        setPasswordAndSalt(account);
+        return ResultUtil.buildR(accountService.save(account));
+    }
+
+    /**
+     * 设置加密密码和加密盐
+     * 由于 ：账号增加 add()和更新update()方法都需要用到密码的加密和解密，
+     * 所以我抽象出来一个方法setPasswordAndSalt()作为公共方法使用
+     * @param account
+     */
+    private void setPasswordAndSalt(Account account){
         String password = account.getPassword();
         String salt = UUID.fastUUID().toString().replaceAll("-","");
         MD5 md5 = new MD5(salt.getBytes());
@@ -103,12 +116,10 @@ public class AccountController {
         account.setSalt(salt);
         System.out.println("============================");
         System.out.println(password+account.getRealName());
-        return ResultUtil.buildR(accountService.save(account));
     }
 
     /**
      * 更新账号列表页
-     *
      * @param id
      * @param model
      * @return
@@ -117,31 +128,73 @@ public class AccountController {
     public String toUpdate(@PathVariable Long id, Model model) {
         Account account = accountService.getById(id);
         model.addAttribute("account", account);
+
+        List<Role> roles = roleService.list(Wrappers.<Role>lambdaQuery().orderByAsc(Role::getRoleId));
+        model.addAttribute("roles",roles);
         return "account/accountUpdate";
     }
 
     /**
      * 修改账户
-     *
      * @param account
      * @return
      */
     @PutMapping
     @ResponseBody
     public R<Object> update(@RequestBody Account account) {
+
+        if (StringUtils.isNotBlank(account.getPassword())){
+            setPasswordAndSalt(account);
+        }else {
+            account.setPassword(null);
+        }
+
         return ResultUtil.buildR(accountService.updateById(account));
     }
 
     /**
+     * 根据countId查询账号信息 accountDetail
      * @param id
      * @param model
      * @return
      */
     @GetMapping("toDetail/{id}")
     public String toDetail(@PathVariable Long id, Model model) {
-        Account account = accountService.getById(id);
+        Account account = accountService.getAccountById(id);
         model.addAttribute("account", account);
         return "account/accountDetail";
+    }
+
+    /**
+     * 删除操作
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public R<Object> delete(@PathVariable Long id, HttpSession session){
+        Account account=(Account)session.getAttribute("account");
+        if (account.getAccountId().equals(id)){
+            return R.failed("不能删除自己哦");
+        }
+        return ResultUtil.buildR(accountService.removeById(id));
+    }
+
+    /**
+     * 重名验证
+     * @param username
+     * @return
+     * accountId 可传可不传(required = false)
+     */
+    @GetMapping({"/{username}","/{username}/{accountId}"})
+    @ResponseBody
+    public R<Object> checkUsername(@PathVariable String username
+            ,@PathVariable(required = false) Long accountId){
+        Integer count = accountService.lambdaQuery()
+                .eq(Account::getUsername, username)
+                .ne(accountId!=null,Account::getAccountId,accountId)
+                .count();
+        return R.ok(count);
     }
 
 }

@@ -25,6 +25,11 @@ public class Customer extends BaseEntity {
      */
     @TableId(value = "customer_id", type = IdType.AUTO)
     private Long customerId;
+    /**
+     * 公司名称
+     */
+    private String companyName;
+
 
     /**
      * 真实姓名
