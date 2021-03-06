@@ -3,57 +3,13 @@ layui.laydate.render({
     range: true,
     //2020-11-12 - 2020-11-20
 });
- layui.use(["jquery", 'form', 'layer'],
-    function () {
-        var $ = layui.jquery,
-            layer = layui.layer,
-            form = layui.form;
-        //自定义验证规则
-        form.verify({
-            nikename: function (value) {
-                if (value.length < 5) {
-                    return '昵称至少得5个字符啊';
-                }
-            },
-            len: function (value) {
-                if (value<0) {
-                    return '数值必须大于零';
-                }
-            },
-            passw: [/(.+){6,12}$/, '密码必须6到12位'],
-            repass: function (value) {
-                if ($('#L_pass').val() != $('#L_repass').val()) {
-                    return '两次密码不一致';
-                }
-            },
-            otherReq: function (value, item) {
-                var $ = layui.$;
-                var verifyName = $(item).attr('name')
-                    , verifyType = $(item).attr('type')
-                    , formElem = $(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
-                    , verifyElem = formElem.find('input[name=' + verifyName + ']')//获取需要校验的元素
-                    , isTrue = verifyElem.is(':checked')//是否命中校验
-                    , focusElem = verifyElem.next().find('i.layui-icon'); //焦点元素
-                if (!isTrue || !value) {
-                    //定位焦点
-                    focusElem.css(verifyType == 'radio' ? {"color": "#FF5722"} : {"border-color": "#FF5722"});
-                    //对非输入框设置焦点
-                    focusElem.first().attr("tabIndex", "1").css("outline", "0").blur(function () {
-                        focusElem.css(verifyType == 'radio' ? {"color": ""} : {"border-color": ""});
-                    }).focus();
-                    return '必填项不能为空';
-                }
-            }
-        });
-    }
-);
 var table = layui.table;
 //执行渲染
 var tableIns = table.render({
     elem: '#contractList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: '380px',
+    height:  'full-135',
     cellMinWidth: 80,
     url: '/contract/list',//数据接口
     page: true,//开启分页
@@ -71,25 +27,25 @@ var tableIns = table.render({
         {field: 'customerName', title: '客户姓名', align: 'center', width: 90},
         {field: 'contractName', title: '合同名称', align: 'center', width: 180},
         {field: 'realName', title: '销售人', align: 'center', width: 80},
-        {field: 'productName', title: '产品名称', align: 'center', width: 100},
+        {field: 'productName', title: '产品名称', align: 'center', width: 110},
         {
             field: 'amount', title: '总数量', sort: true, align: 'center', width: 100, templet: function (a) {
                 return a.amount + '吨'
             }
         },
         {
-            field: 'price', title: '单价', sort: true, align: 'center', width: 100, templet: function (a) {
+            field: 'price', title: '单价', sort: true, align: 'center', width: 110, templet: function (a) {
                 return a.price + '元/吨'
             }
         },
         {
-            field: 'total', title: '总价', sort: true, align: 'center', width: 90, templet: function (a) {
+            field: 'total', title: '总价', sort: true, align: 'center', width: 100, templet: function (a) {
                 a.total = a.total / 10000;
                 return a.total + '万元';
             }
         },
-        {field: 'effectiveTime', title: '生效时间', align: 'center', width: 130,},
-        {field: 'expireTime', title: '到期时间', align: 'center', width: 130,},
+        {field: 'effectiveTime', title: '生效时间', align: 'center', width: 130},
+        {field: 'expireTime', title: '到期时间', align: 'center', width: 130},
         {
             field: 'deleted',
             title: '合同状态', width: 240, align: 'center', fixed: 'right',
@@ -164,7 +120,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     let contractId = data.contractId;
     if (layEvent === 'detail') { //查看
         console.log(contractId);
-        openlayer('/contract/toDetail/' + contractId, '账号详情');
+        openlayer('/contract/toDetail/' + contractId, '账号详情', '100%', '100%');
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
             layer.close(index);
@@ -173,7 +129,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         // console.log(customerId);
-        openlayer('/contract/toUpdate/' + contractId, '编辑账号');
+        openlayer('/contract/toUpdate/' + contractId, '编辑账号', '100%', '100%');
         layui.form.render();
         mySubmit('updateSubmit', 'PUT')
     }
@@ -206,16 +162,7 @@ function query() {
  * 进入新增页
  */
 function toAdd() {
-    $.ajaxSettings.async = false;
-    $.get('/contract/toAdd', function (res) {
-        layer.open({
-            type: 1,//0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
-            title: '创建合同',
-            area: ['100%', '100%'],//宽高
-            content: res
-        });
-    });
-    $.ajaxSettings.async = true;
+    openlayer('/contract/toAdd', '创建合同', '100%', '100%');
     //渲染radio
     layui.form.render();
     mySubmit('addSubmit', 'POST');

@@ -18,7 +18,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">客户姓名</label>
         <div class="layui-input-block">
-            <select name="customerName" lay-verify="required">
+            <select name="customerId"  lay-verify="required">
                 <option value="">--请选择--</option>
                 <option value="" th:each="customer:${customers}" th:value="${customer.customerId}"
                         th:text="${customer.customerName}">
@@ -36,7 +36,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">销售人</label>
         <div class="layui-input-block">
-            <select name="realName" lay-verify="required">
+            <select name="accountId" lay-verify="required">
                 <option value="">--请选择销售人--</option>
                 <option value="" th:each="account:${accounts}" th:value="${account.accountId}"
                         th:text="${account.realName}">--请选择--
@@ -47,10 +47,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">产品名称</label>
         <div class="layui-input-block">
-            <select lay-verify="required">
+            <select name="productId"  lay-verify="required" lay-filter="chiocePayway">
                 <option value="">--请选择产品--</option>
-                <option id="price" th:each="product:${products}" th:value="${product.productId}"
-                        th:text="${product.productName}+'-'+${product.price}">--请选择--
+                <option th:each="product:${products}" th:value="${product.productId}"
+                        th:text="${product.productName}">--请选择--
+                    <input id="productName" th:value="${products}" hidden>
                 </option>
             </select>
         </div>
@@ -61,13 +62,6 @@
         <div class="layui-input-block">
             <input type="number" name="amount" placeholder="请输入产品总数量" autocomplete="off" class="layui-input"
                    lay-verify="len" id="zong" onkeyup="sum();" maxlength="100">吨
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">产品名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="productName" autocomplete="off" class="layui-input"
-                   lay-verify="len" id="prod" maxlength="100">
         </div>
     </div>
     <div class="layui-form-item">
@@ -87,22 +81,12 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">创建时间</label>
-        <div class="layui-inline">
-            <input class="layui-input" id="effectiveTime" name="effectiveTime" placeholder="创建时间">
+        <label class="layui-form-label required">合同有效期范围</label>
+        <div class="layui-input-inline">
+            <input name="effectiveTime" id="effectiveTime" class="layui-input" placeholder="合同有效开始日">
         </div>
-    </div>
-    <div class="layui-form-pane" style="margin-top: 15px;">
-        <div class="layui-form-item">
-            <label class="layui-form-label" required>合同有效有效期</label>
-            <div class="layui-input-inline">
-                <input name="effectiveTime" class="layui-input" placeholder="合同有效开始日" id="LAY_demorange_s"
-                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-            </div>
-            <div class="layui-input-inline">
-                <input name="expireTime" class="layui-input" placeholder="合同有效截止日" id="LAY_demorange_e"
-                       onclick="layui.laydate({elem: this, istime: true, format: 'YYYY-MM-DD hh:mm:ss'})">
-            </div>
+        <div class="layui-input-inline">
+            <input type="text" name="expireTime" id="expireTime" class="layui-input" placeholder="合同有效截止日">
         </div>
     </div>
     <div class="layui-form-item">
@@ -113,57 +97,73 @@
     </div>
 </form>
 <script>
-    //日期时间选择器
+    /**
+     * 日期时间选择器
+     * 分别是创建时间，有效时间和到期时间
+     * type datetime 表示是日期时间
+     * trigger 自定义弹出控件的事件
+     *     类型：String，默认值：focus，如果绑定的元素非输入框，则默认事件为：click
+     */
+    laydate.render({
+        elem: '#createTime'
+        , type: 'datetime'
+        , trigger: 'click'
+        , format: 'yyyy-MM-dd HH:mm:ss'
+    });
     laydate.render({
         elem: '#effectiveTime'
-        ,type: 'datetime'
-        ,trigger: 'click'
-        ,format:  'yyyy年MM月dd日 HH时mm分ss秒'
+        , type: 'datetime'
+        , trigger: 'click'
+        , format: 'yyyy-MM-dd HH:mm:ss'
     });
-    layui.use('laydate', function () {
-        var laydate = layui.laydate;
-        var start = {
-            min: '2021-03-01 20:08:08'
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
-                end.min = datas; //开始日选好后，重置结束日的最小日期
-                end.start = datas //将结束日的初始值设定为开始日
-            }
-        };
-
-        var end = {
-            min: '2021-03-01 20:08:08'
-            , max: '2099-06-16 23:59:59'
-            , istoday: false
-            , choose: function (datas) {
-                start.max = datas; //结束日选好后，重置开始日的最大日期
-            }
-        };
-
-        document.getElementById('LAY_demorange_s').onclick = function () {
-            start.elem = this;
-            laydate(start);
-        }
-        document.getElementById('LAY_demorange_e').onclick = function () {
-            end.elem = this
-            laydate(end);
-        }
-
+    laydate.render({
+        elem: '#expireTime'
+        , type: 'datetime'
+        , trigger: 'click'
+        , format: 'yyyy-MM-dd HH:mm:ss'
     });
 </script>
-<script>
-    var price = document.getElementById("price").textContent;
+<script th:inline="javascript">
+    var msg = [[${products}]];
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('select(chiocePayway)', function (data) {
+            // layui.layer.msg(data.value);//得到被选中的值
+            console.log("valID:" + data.value);
+            for (let i = 0; i < msg.length; i++) {
+                console.log("productID"+msg[i].productId);
+                if (msg[i].productId == data.value) {
+                    document.getElementById("dan").value = msg[i].price;
+                    console.log(msg[i].price);
+                }
+            }
+            // console.log(data.elem);
+            // document.getElementById("dan").value = data.value;
+        })
+    })
 
+    console.log(msg);
+</script>
+<script>
+    /**
+     * 监听select选项
+     * 通过 加监听<select lay-verify="required" lay-filter="chiocePayway" >
+     * 页面加载完执行监听，并实时通过商品的改变来更新商品的单价
+     */
+    // function ret(){
+
+
+    // }
+
+    /**
+     * 判断商品单价和数量是否不为空，成立时自动计算商品总金额，并更新到输入框中
+     */
     function sum() {
-        console.log(price);
-        var danjia = price.match(/\d+(.\d+)?/g);
-        document.getElementById("prod").value = price.replace(/[^\u4e00-\u9fa5]/gi, "");
-        document.getElementById("dan").value = danjia[0];
-        setTimeout(function () {
-            document.getElementById("he").value = document.getElementById("dan").value * document.getElementById("zong").value;
-        }, 500)
+        if ($("#dan").val() != '' && $("#zong").val() != '') {
+            document.getElementById("he").value = $("#dan").val() * $("#zong").val();
+        }
     }
+
 </script>
 </body>
 </html>

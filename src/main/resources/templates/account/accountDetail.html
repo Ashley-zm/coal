@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -40,11 +40,11 @@
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">创建时间</label>
-			<div class="layui-form-mid" th:text="*{createTime}"></div>
+			<div class="layui-form-mid"  th:text="*{#temporals.format(createTime,'yyyy-MM-dd HH:mm:ss')}"></div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">修改时间</label>
-			<div class="layui-form-mid" th:text="*{modifiedTime}"></div>
+			<div class="layui-form-mid" th:text="*{#temporals.format(modifiedTime,'yyyy-MM-dd HH:mm:ss')}"></div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">

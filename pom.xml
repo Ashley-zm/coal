@@ -21,7 +21,7 @@
         <layui.version>2.5.6</layui.version>
         <locator.version>0.40</locator.version>
         <hutool.version>5.4.7</hutool.version>
-<!--        MP的模板引擎依赖-->
+        <!--        MP的模板引擎依赖-->
         <freemark.version>2.3.30</freemark.version>
     </properties>
 
@@ -67,7 +67,7 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
-<!--        -->
+        <!--        -->
         <dependency>
             <groupId>org.casbin</groupId>
             <artifactId>jcasbin</artifactId>
@@ -75,7 +75,7 @@
         </dependency>
 
         <!-- hutool-all -->
-<!--        使用：md的加密，简化代码 -->
+        <!--        使用：md的加密，简化代码 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -89,7 +89,7 @@
         </dependency>
 
         <!-- webjars-locator -->
-<!--        引入js，将js打成jar包-->
+        <!--        引入js，将js打成jar包-->
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator</artifactId>
@@ -110,7 +110,7 @@
             <version>${layui.version}</version>
         </dependency>
 
-<!--MP代码生成器依赖和模板引擎的依赖-->
+        <!--MP代码生成器依赖和模板引擎的依赖-->
         <!-- mybatis-plus-generator -->
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -126,6 +126,11 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.7</version>
+        </dependency>
     </dependencies>
 
     <build>

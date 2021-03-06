@@ -4,7 +4,7 @@ var tableIns = table.render({
     elem: '#customerList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-100',
+    height:  'full-120',
     cellMinWidth: 80,
     url: '/customer/list',//数据接口
     page: true,//开启分页
@@ -18,7 +18,7 @@ var tableIns = table.render({
     },
     cols: [[//表头
         {type: 'checkbox', fixed: 'left'},
-        {field: 'companyName', title: '公司名称', width: 140, align: 'center'},
+        {field: 'companyName', title: '公司名称', width: 180, align: 'center'},
         {field: 'customerName', title: '真实姓名', width: 100, align: 'center'},
         {field: 'sex', title: '性别', width: 80, sort: true, align: 'center'},
         {field: 'age', title: '年龄', width: 80, sort: true, align: 'center'},
@@ -28,9 +28,9 @@ var tableIns = table.render({
             }
         },
         {field: 'phone', title: '手机号码', align: 'center', width: 120},
-        {field: 'address', title: '地址'},
-        {field: 'createTime', title: '创建时间'},
-        {field: 'modifiedTime', title: '修改时间'},
+        {field: 'address', title: '地址', align: 'center', width: 170},
+        {field: 'createTime', title: '创建时间', align: 'center', width: 130},
+        {field: 'modifiedTime', title: '修改时间', align: 'center', width: 130},
         {title: '操作', width: 165, align: 'center', toolbar: '#barDemo', fixed: 'right'}
     ]]
 });
@@ -54,7 +54,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
 
     let customerId = data.customerId;
     if (layEvent === 'detail') { //查看
-        openlayer('/customer/toDetail/' + customerId, '客户詳情');
+        openlayer('/customer/toDetail/' + customerId, '客户詳情', '800px', '450px');
         console.log("查看");
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
@@ -64,7 +64,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         // console.log(customerId);
-        openlayer('/customer/toUpdate/' + customerId, '修改客户');
+        openlayer('/customer/toUpdate/' + customerId, '修改客户', '800px', '450px');
         layui.form.render();
         mySubmit('updateSubmit', 'PUT')
     }
@@ -89,7 +89,7 @@ function query() {
  * 进入新增页
  */
 function toAdd() {
-    openlayer('/customer/toAdd', '新增客户');
+    openlayer('/customer/toAdd', '新增客户', '800px', '450px');
     //渲染radio
     layui.form.render();
     mySubmit('addSubmit', 'POST');

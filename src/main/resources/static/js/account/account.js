@@ -9,7 +9,7 @@ var tableIns = table.render({
     elem: '#accountList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-100',
+    height:  'full-200',
     url: '/account/list',//数据接口
     page: true,//开启分页
     parseData: function (res) { //res 即为原始返回的数据
@@ -57,7 +57,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     let accountId = data.accountId;
     if (layEvent === 'detail') { //查看
         console.log(accountId);
-        openlayer('/account/toDetail/' + accountId, '账号详情');
+        openlayer('/account/toDetail/' + accountId, '账号详情','800px', '450px');
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
             layer.close(index);
@@ -66,7 +66,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         // console.log(customerId);
-        openlayer('/account/toUpdate/' + accountId, '编辑账号');
+        openlayer('/account/toUpdate/' + accountId, '编辑账号','800px', '450px');
         layui.form.render();
         mySubmit('updateSubmit', 'PUT')
     }
@@ -91,7 +91,7 @@ function query() {
  * 进入新增页
  */
 function toAdd() {
-    openlayer('/account/toAdd', '新增账号');
+    openlayer('/account/toAdd', '新增账号','800px', '450px');
     //渲染radio
     layui.form.render();
     mySubmit('addSubmit', 'POST');

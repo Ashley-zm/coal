@@ -17,10 +17,11 @@ var tableIns = table.render({
         };
     },
     cols: [[//表头
-        {field: 'roleName', title: '角色名称', width: 100},
-        {field: 'createTime', title: '创建时间'},
-        {field: 'modifiedTime', title: '修改时间'},
-        {title: '操作', width: 165, align: 'center', toolbar: '#barDemo'}
+        {field: 'roleName', title: '角色名称', align: 'center',width: 100},
+        {field: 'remark', title: '备注',align: 'center', width: 260},
+        {field: 'createTime', align: 'center',title: '创建时间'},
+        {field: 'modifiedTime',align: 'center', title: '修改时间'},
+        {title: '操作', width: 165, align: 'center', toolbar: '#barDemo',fixed: 'right'}
     ]]
 });
 
@@ -45,7 +46,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     let roleId = data.roleId;
     if (layEvent === 'detail') { //查看
         console.log(roleId);
-        openlayer('/role/toDetail/' + roleId, '角色详情');
+        openlayer('/role/toDetail/' + roleId, '角色详情','800px', '450px');
         showTree('/role/listResource/' + roleId+'/1', 'resource', false);
 
     } else if (layEvent === 'del') { //删除
@@ -56,7 +57,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         console.log(roleId);
-        openlayer('/role/toUpdate/' + roleId, '编辑角色');
+        openlayer('/role/toUpdate/' + roleId, '编辑角色','800px', '450px');
         layui.form.render();
         showTree('/role/listResource/' + roleId+'/0', 'resource', true);
         mySubmit('updateSubmit', 'PUT', addIds);
@@ -82,7 +83,7 @@ function query() {
  * 进入新增页
  */
 function intoAdd() {
-    openlayer('/role/toAdd', '新增角色');
+    openlayer('/role/toAdd', '新增角色','800px', '450px');
     layui.form.render();
     showTree('/role/listResource', 'resource', true);
     mySubmit('addSubmit', 'POST', addIds);

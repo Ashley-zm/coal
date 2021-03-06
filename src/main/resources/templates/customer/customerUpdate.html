@@ -6,9 +6,17 @@
 <body>
 <form class="layui-form" id="updateForm" th:action="@{/customer}" th:object="${customer}">
     <div class="layui-form-item">
-        <label class="layui-form-label">真实姓名</label>
+        <label class="layui-form-label">公司名称</label>
         <div class="layui-input-block">
             <input type="hidden" name="customerId" th:value="*{customerId}">
+            <input type="text" name="companyName" placeholder="请输入公司名称"
+                   autocomplete="off" class="layui-input" lay-verify="required" maxlength="50"
+                   th:value="*{companyName}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">真实姓名</label>
+        <div class="layui-input-block">
             <input type="text" name="realName" placeholder="请输入姓名"
                    autocomplete="off" class="layui-input" lay-verify="required" maxlength="50"
                    th:value="*{customerName}">

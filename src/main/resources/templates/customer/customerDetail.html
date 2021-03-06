@@ -6,6 +6,11 @@
 <body>
 	<div class="layui-form" th:object="${customer}">
 		<div class="layui-form-item">
+			<label class="layui-form-label">公司名称</label>
+			<div class="layui-input-block">
+				<div class="layui-form-mid" th:text="*{companyName}"></div>
+			</div>
+		</div><div class="layui-form-item">
 			<label class="layui-form-label">真实姓名</label>
 			<div class="layui-input-block">
 				<div class="layui-form-mid" th:text="*{customerName}"></div>
@@ -43,7 +48,7 @@
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">创建时间</label>
-			<div class="layui-form-mid" th:text="*{#temporals.format(createTime,'yyyy-MM-dd HH-mm-ss')}"></div>
+			<div class="layui-form-mid" th:text="*{#temporals.format(createTime,'yyyy-MM-dd HH:mm:ss')}"></div>
 		</div>
 		<div class="layui-form-item">
 			<div class="layui-input-block">

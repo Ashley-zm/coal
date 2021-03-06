@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
@@ -22,7 +23,7 @@ import java.time.LocalDateTime;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class Contract extends BaseEntity{
+public class Contract extends BaseEntity {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -50,35 +51,42 @@ public class Contract extends BaseEntity{
      * 销售人ID
      */
     private Long accountId;
-
+    /**
+     * 销售人ID
+     */
+    private Long productId;
     /**
      * 销售人名称(不在contract表中，使用注解
-     *     @TableField(exist = false)
-     *     这样就不会自动映射了。)
+     *
+     * @TableField(exist = false)
+     * 这样就不会自动映射了。)
      */
     @TableField(exist = false)
     private String realName;
 
     /**
      * 客户姓名(不在contract表中，使用注解
-     *     @TableField(exist = false)
-     *     这样就不会自动映射了。)
+     *
+     * @TableField(exist = false)
+     * 这样就不会自动映射了。)
      */
     @TableField(exist = false)
     private String customerName;
 
     /**
      * 产品名称(不在contract表中，使用注解
-     *     @TableField(exist = false)
-     *     这样就不会自动映射了。)
+     *
+     * @TableField(exist = false)
+     * 这样就不会自动映射了。)
      */
     @TableField(exist = false)
     private String productName;
 
     /**
      * 产品单价(不在contract表中，使用注解
-     *     @TableField(exist = false)
-     *     这样就不会自动映射了。)
+     *
+     * @TableField(exist = false)
+     * 这样就不会自动映射了。)
      */
     @TableField(exist = false)
     private double price;
@@ -96,16 +104,14 @@ public class Contract extends BaseEntity{
     /**
      * 生效时间
      */
-    @JsonFormat(pattern = "yyyy-MM—dd HH:mm:ss")
-    @TableField(fill = FieldFill.INSERT)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime effectiveTime;
 
     /**
      * 到期时间
      */
-    @JsonFormat(pattern = "yyyy-MM—dd HH:mm:ss")
-    @TableField(fill = FieldFill.UPDATE)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expireTime;
-
-
 }

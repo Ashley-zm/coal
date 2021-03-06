@@ -1,5 +1,7 @@
 package com.zm.coal.controller;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -20,9 +22,7 @@ import com.zm.coal.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -110,19 +110,52 @@ public class ContractController {
     }
 
     /**
+     * 进入新增页contractAdd页面
      * 创建合同时需要选择客户及账户人
+     *
      * @param model
      * @return
      */
     @GetMapping("toAdd")
     public String toAdd(Model model) {
+        toAddEvery(model);
+        return "contract/contractAdd";
+    }
+
+    private void toAddEvery(Model model) {
         List<Customer> customers = customerService.list(Wrappers.<Customer>lambdaQuery().orderByAsc(Customer::getCustomerId));
         List<Account> accounts = accountService.list(Wrappers.<Account>lambdaQuery().orderByAsc(Account::getAccountId));
         List<Product> products = productService.list(Wrappers.<Product>lambdaQuery().orderByAsc(Product::getProductId));
-        model.addAttribute("customers",customers);
-        model.addAttribute("accounts",accounts);
-        model.addAttribute("products",products);
-        return "contract/contractAdd";
+        model.addAttribute("customers", customers);
+        model.addAttribute("accounts", accounts);
+        model.addAttribute("products", products);
+    }
+
+    /**
+     * 新增合同操作
+     *
+     * @param contract
+     * @return
+     */
+    @PostMapping
+    @ResponseBody
+    public R<Object> add(@RequestBody Contract contract) {
+        return ResultUtil.buildR(contractService.save(contract));
+    }
+
+    /**
+     * 更新合同信息
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("toUpdate/{id}")
+    public String toUpdate(@PathVariable Long id, Model model) {
+        Contract contract = contractService.getById(id);
+        model.addAttribute("contract", contract);
+
+        toAddEvery(model);
+        return "account/accountUpdate";
     }
 
 }

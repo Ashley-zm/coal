@@ -27,5 +27,18 @@ public interface ContractService extends IService<Contract> {
      */
     IPage<Contract> contractPage(Page<Contract> page, Wrapper<Contract> wrapper);
 
+    /**
+     * 新增合同及合同所具有的产品、销售员、客户
+     * @param contract
+     * @return
+     */
+    boolean saveContract(Contract contract);
+
+    /**
+     * 修改角色及角色所具有的产品、销售员、客户
+     * @param contract
+     * @return
+     */
+    boolean updateContract(Contract contract);
 
 }
