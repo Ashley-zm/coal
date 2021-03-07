@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+</head>
+
+<body>
+<div class="layui-form" th:object="${contract}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">合同编号</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{contractCode}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户姓名</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{customerName}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">合同名称</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{contractName}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">销售人</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{realName}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{productName}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">总数量</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{amount}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单价</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{price}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">总价</label>
+        <div class="layui-input-block">
+            <div class="layui-form-mid" th:text="*{total}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">生效时间</label>
+        <div class="layui-form-mid" th:text="*{#temporals.format(effectiveTime,'yyyy-MM-dd HH:mm:ss')}"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">到期时间</label>
+        <div class="layui-form-mid" th:text="*{#temporals.format(expireTime,'yyyy-MM-dd HH:mm:ss')}"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">创建时间</label>
+        <div class="layui-form-mid" th:text="*{#temporals.format(createTime,'yyyy-MM-dd HH:mm:ss')}"></div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index)">关闭</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.Constants;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zm.coal.entity.Account;
 import com.zm.coal.entity.Contract;
 import org.apache.ibatis.annotations.Param;
 
@@ -28,11 +29,11 @@ public interface ContractService extends IService<Contract> {
     IPage<Contract> contractPage(Page<Contract> page, Wrapper<Contract> wrapper);
 
     /**
-     * 新增合同及合同所具有的产品、销售员、客户
-     * @param contract
+     * 根据contractId查询账号信息contractDetail
+     * @param id
      * @return
      */
-    boolean saveContract(Contract contract);
+    Contract getContractById(Long id);
 
     /**
      * 修改角色及角色所具有的产品、销售员、客户

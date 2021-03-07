@@ -4,7 +4,7 @@ var tableIns = table.render({
     elem: '#customerList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height:  'full-120',
+    height: 'full-100',
     cellMinWidth: 80,
     url: '/customer/list',//数据接口
     page: true,//开启分页

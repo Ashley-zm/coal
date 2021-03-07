@@ -103,6 +103,7 @@ public class Contract extends BaseEntity {
 
     /**
      * 生效时间
+     * 问题：Cannot deserialize value of type `java.time.LocalDateTime` from String
      */
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")

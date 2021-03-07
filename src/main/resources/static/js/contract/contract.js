@@ -9,7 +9,7 @@ var tableIns = table.render({
     elem: '#contractList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height:  'full-135',
+    height: 'full-160',
     cellMinWidth: 80,
     url: '/contract/list',//数据接口
     page: true,//开启分页
@@ -52,7 +52,7 @@ var tableIns = table.render({
             templet: setState,
 
         },
-        {title: '操作', width: 165, align: 'center', toolbar: '#barDemo', fixed: 'right'}
+        {title: '操作', width: 230, align: 'center', toolbar: '#barDemo', fixed: 'right'}
     ]]
 });
 
@@ -116,11 +116,12 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     var data = obj.data; //获得当前行数据
     var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
+    //禁用当前行，把当前对象的 class="layui-disabled"
 
     let contractId = data.contractId;
     if (layEvent === 'detail') { //查看
         console.log(contractId);
-        openlayer('/contract/toDetail/' + contractId, '账号详情', '100%', '100%');
+        openlayer('/contract/toDetail/' + contractId, '合同详情', '100%', '100%');
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
             layer.close(index);
@@ -132,6 +133,19 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         openlayer('/contract/toUpdate/' + contractId, '编辑账号', '100%', '100%');
         layui.form.render();
         mySubmit('updateSubmit', 'PUT')
+    } else if (layEvent === 'process') {
+        console.log(typeof tr);
+        console.log(tr[2]);
+        console.log(typeof tr[2]);
+        var parentElem = tr[2];
+        var caoZuo = parentElem.getElementsByClassName("layui-table-col-special");
+        console.log(caoZuo);
+        console.log(caoZuo[0]);
+        console.log(typeof caoZuo[0].children[0].children[0]);
+        console.log(caoZuo[0].children[0].children[0]);
+        caoZuo[0].children[0].children[0].setAttribute("style", " pointer-events:none;cursor: default;opacity: 0.6;");
+        caoZuo[0].children[0].children[2].setAttribute("style"," pointer-events:none;cursor: default;opacity: 0.6;");
+        caoZuo[0].children[0].children[3].setAttribute("style", " pointer-events:none;cursor: default;opacity: 0.6;");
     }
 });
 

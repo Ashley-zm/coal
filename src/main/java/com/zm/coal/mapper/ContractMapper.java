@@ -23,5 +23,12 @@ public interface ContractMapper  extends BaseMapper<Contract>  {
      */
     IPage<Contract> contractPage(Page<Contract> page, @Param(Constants.WRAPPER) Wrapper<Contract> wrapper);
 
+    /**
+     * 根据contracId查询合同的信息
+     * 在ContractServiceImpl中的getContractById中使用
+     * @param id
+     * @return
+     */
+    Contract selectContractById(Long id);
 
 }

@@ -78,6 +78,7 @@ public class ContractController {
                 .like(StringUtils.isNotBlank(query.getContractCode()), "c.contract_id", query.getContractCode())
                 .like(StringUtils.isNotBlank(query.getCustomerName()), "u.customer_name", query.getCustomerName())
                 .like(StringUtils.isNotBlank(query.getRealName()), "a.real_name", query.getRealName())
+                .orderByDesc(query.getContractId())
                 .eq("c.deleted", 0);
         String createTimeRange = query.getCreateTimeRange();
         String status = query.getStatus();
@@ -139,7 +140,7 @@ public class ContractController {
      */
     @PostMapping
     @ResponseBody
-    public R<Object> add(@RequestBody Contract contract) {
+    public R<Object> q(@RequestBody Contract contract) {
         return ResultUtil.buildR(contractService.save(contract));
     }
 
@@ -153,9 +154,23 @@ public class ContractController {
     public String toUpdate(@PathVariable Long id, Model model) {
         Contract contract = contractService.getById(id);
         model.addAttribute("contract", contract);
-
         toAddEvery(model);
         return "account/accountUpdate";
+    }
+
+    /**
+     * 根据contracId查询合同的信息
+     * 通过service的Impl实现类中getContractById方法到mapper.java中的接口，
+     * 进而mapper.xml对数据库进行查询
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("toDetail/{id}")
+    public String toDetail(@PathVariable Long id,Model model){
+        Contract contract = contractService.getContractById(id);
+        model.addAttribute("contract",contract);
+        return "contract/contractDetail";
     }
 
 }

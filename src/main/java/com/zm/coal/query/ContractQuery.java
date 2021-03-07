@@ -11,6 +11,10 @@ import lombok.Data;
 @Data
 public class ContractQuery {
     /**
+     * 合同id
+     */
+    private String contractId;
+    /**
      * 合同编号
      */
     private String contractCode;

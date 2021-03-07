@@ -18,7 +18,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">客户姓名</label>
         <div class="layui-input-block">
-            <select name="customerId"  lay-verify="required">
+            <select name="customerId" lay-verify="required">
                 <option value="">--请选择--</option>
                 <option value="" th:each="customer:${customers}" th:value="${customer.customerId}"
                         th:text="${customer.customerName}">
@@ -47,7 +47,7 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">产品名称</label>
         <div class="layui-input-block">
-            <select name="productId"  lay-verify="required" lay-filter="chiocePayway">
+            <select name="productId" lay-verify="required" lay-filter="chiocePayway">
                 <option value="">--请选择产品--</option>
                 <option th:each="product:${products}" th:value="${product.productId}"
                         th:text="${product.productName}">--请选择--
@@ -83,10 +83,11 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">合同有效期范围</label>
         <div class="layui-input-inline">
-            <input name="effectiveTime" id="effectiveTime" class="layui-input" placeholder="合同有效开始日">
+            <input autocomplete="off" name="effectiveTime" id="effectiveTime" class="layui-input" placeholder="合同有效开始日">
         </div>
         <div class="layui-input-inline">
-            <input type="text" name="expireTime" id="expireTime" class="layui-input" placeholder="合同有效截止日">
+            <input autocomplete="off" type="text" name="expireTime" id="expireTime" class="layui-input"
+                   placeholder="合同有效截止日">
         </div>
     </div>
     <div class="layui-form-item">
@@ -123,7 +124,21 @@
         , format: 'yyyy-MM-dd HH:mm:ss'
     });
 </script>
+
 <script th:inline="javascript">
+    /**
+     * 通过js获取thymleaf从后台传到前台的值
+     * <script th:inline="javascript">
+     *      var msg = [[${products}]];
+     * products绑定的是html中 <input id="productName" th:value="${products}" hidden>
+     *     msg是一个对象数组，我再通过for循环msg[i].XX 来获取id与用户所选择的产品id进行匹配
+     *     进而获取产品的单价price，然后↓↓↓
+     *
+     * 监听select选项
+     * 通过 加监听<select lay-verify="required" lay-filter="chiocePayway" >
+     *     在通过js： form.on('select(chiocePayway)', function (data) {}）
+     * 页面加载完执行监听用户所选择的产品id，并实时通过商品的改变来更新商品的单价
+     */
     var msg = [[${products}]];
     layui.use(['form'], function () {
         var form = layui.form;
@@ -131,36 +146,25 @@
             // layui.layer.msg(data.value);//得到被选中的值
             console.log("valID:" + data.value);
             for (let i = 0; i < msg.length; i++) {
-                console.log("productID"+msg[i].productId);
+                console.log("productID" + msg[i].productId);
                 if (msg[i].productId == data.value) {
                     document.getElementById("dan").value = msg[i].price;
                     console.log(msg[i].price);
                 }
             }
-            // console.log(data.elem);
-            // document.getElementById("dan").value = data.value;
         })
-    })
-
-    console.log(msg);
+    });
 </script>
 <script>
-    /**
-     * 监听select选项
-     * 通过 加监听<select lay-verify="required" lay-filter="chiocePayway" >
-     * 页面加载完执行监听，并实时通过商品的改变来更新商品的单价
-     */
-    // function ret(){
-
-
-    // }
 
     /**
      * 判断商品单价和数量是否不为空，成立时自动计算商品总金额，并更新到输入框中
+     * 装车费5元/吨，运费100元/吨，卸车费5元/吨，
+     * 商品总金额=（单价+110）*总数量
      */
     function sum() {
         if ($("#dan").val() != '' && $("#zong").val() != '') {
-            document.getElementById("he").value = $("#dan").val() * $("#zong").val();
+            document.getElementById("he").value = ($("#dan").val() + 110) * $("#zong").val();
         }
     }
 

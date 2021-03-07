@@ -53,26 +53,12 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
         return baseMapper.contractPage(page, wrapper);
     }
 
-    /**
-     * 新增合同及合同所具有的产品、销售员、客户
-     * @param contract
-     * @return
-     */
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean saveContract(Contract contract) {
-        save(contract);
-        Long contractId = contract.getContractId();
-        Long accountId = contract.getAccountId();
-        Long customerId = contract.getCustomerId();
-        Long productId = contract.getProductId();
-        if (contractId!=null){
-            contract.setAccountId(accountId);
-            contract.setCustomerId(customerId);
-            contract.setProductId(productId);
-            contractMapper.insert(contract);
-        }
-        return true;
+    public Contract getContractById(Long id) {
+        /**
+         * 对应mapper中的接口的方法selectContractById
+         */
+        return baseMapper.selectContractById(id);
     }
 
     @Override
