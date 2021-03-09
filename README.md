@@ -4,8 +4,8 @@ Technology involved: Spring Boot, MyBatis - Plus, Layui, Thymeleaf, jQuery, MySQ
 
 ## The system is designed to complete the following functions:
 ## function:
-Customer information module:
-1.This module is mainly to manage the basic information of customers.
+1.Customer information module:
+This module is mainly to manage the basic information of customers.
 - Operator can add customer information,
 - You can also view customer details
 - and modify and delete customer information, etc.
