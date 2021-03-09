@@ -51,7 +51,7 @@ public class ProductController {
     public R<Map<String, Object>> list(String productName, Long page, Long limit) {
         LambdaQueryWrapper<Product> wrapper = Wrappers.<Product>lambdaQuery()
                 .like(StringUtils.isNotBlank(productName), Product::getProductName, productName)
-                .orderByDesc(Product::getProductId);
+                .orderByAsc(Product::getProductId);
         Page<Product> myPage = productService.page(new Page<>(page, limit), wrapper);
         return ResultUtil.buildPageR(myPage);
     }

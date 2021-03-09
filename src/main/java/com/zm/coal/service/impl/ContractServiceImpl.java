@@ -1,20 +1,14 @@
 package com.zm.coal.service.impl;
 
-import cn.hutool.core.lang.intern.InternUtil;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zm.coal.entity.Contract;
-import com.zm.coal.entity.Customer;
-import com.zm.coal.entity.Product;
 import com.zm.coal.mapper.ContractMapper;
 import com.zm.coal.mapper.CustomerMapper;
 import com.zm.coal.mapper.ProductMapper;
 import com.zm.coal.service.ContractService;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +36,7 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
 
     @Autowired
     private ContractMapper contractMapper;
+
     /**
      * 分页查询合同
      * @param page

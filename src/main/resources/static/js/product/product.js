@@ -4,7 +4,7 @@ var tableIns = table.render({
     elem: '#productList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-200',
+    height: 'full-120',
     cellMinWidth: 80,
     url: '/product/list',//数据接口
     page: true,//开启分页

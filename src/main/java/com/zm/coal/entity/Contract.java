@@ -1,9 +1,6 @@
 package com.zm.coal.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +16,8 @@ import java.time.LocalDateTime;
  * @Author ZhuMei
  * @Date 2021/2/21 13:42
  * @Version 1.0
+ * EqualsAndHashCode
+ * 用于子类 继承父类时自动的给model bean实现equals方法和hashcode方法。
  */
 
 @Data
@@ -115,4 +114,9 @@ public class Contract extends BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime expireTime;
+
+    /**
+     * 是否出厂状态标识(0：否 ，1：是)
+     */
+    private Integer factoryState;
 }

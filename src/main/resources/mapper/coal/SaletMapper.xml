@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zm.coal.mapper.SaleMapper">
+
+    <!-- 分页查询合同 多表查询-->
+    <select id="salePage" resultType="com.zm.coal.entity.Sale">
+        select
+            c.contract_name,
+            c.amount,
+            c.total,
+            p.price,
+            p.product_name,
+            p.p_total,
+            s.*
+        FROM sale s
+        INNER JOIN contract c ON s.contract_id= c.contract_id=1
+        INNER JOIN product p ON p.product_id=c.product_id
+        ${ew.customSqlSegment}
+    </select>
+</mapper>

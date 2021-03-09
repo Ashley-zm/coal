@@ -45,6 +45,7 @@ public class BaseEntity {
 
     /**
      * 逻辑删除标识(0、否 1、是)
+     * @TableLogic在字段上加上这个注解再执行BaseMapper的删除方法时，删除方法会变成修改
      */
     @TableLogic
     private Integer deleted;

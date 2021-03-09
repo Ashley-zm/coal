@@ -52,11 +52,21 @@ var tableIns = table.render({
             templet: setState,
 
         },
-        {title: '操作', width: 230, align: 'center', toolbar: '#barDemo', fixed: 'right'}
+        {
+            field: 'factoryState',
+            title: '是否出厂', width: 120, align: 'center', fixed: 'right', sort: true,
+            templet: factoryState,
+
+        },
+        {title: '操作', width: 180, align: 'center', toolbar: '#barDemo', fixed: 'right'}
     ]]
 });
 
-//获取当前时间，并将其格式化为YYYY-MM-DD
+/**
+ * 获取当前时间，并将其格式化为YYYY-MM-DD
+ * 判断合同状态时需要用到
+ * @returns {string}
+ */
 function getNowFormatDate() {
     var date = new Date();
     var seperator1 = "-";
@@ -73,7 +83,11 @@ function getNowFormatDate() {
     return currentdate;
 };
 
-//设置合同状态
+/**
+ * 设置合同状态
+ * @param date
+ * @returns {string}
+ */
 function setState(date) {
     var deleted = date.deleted;
     var effective = (date.effectiveTime).substring(0, 10);
@@ -100,7 +114,30 @@ function setState(date) {
 
 }
 
-// 监听头部工具栏事件
+/**
+ * 判断合同的 出厂 状态
+ * @param date
+ * @returns {string}
+ */
+function factoryState(date) {
+    var factoryState = date.factoryState;
+    if (factoryState == 1) {
+        return "<a class='layui-btn layui-btn-xs layui-btn-normal' ><i class='layui-icon'>&#x1005;</i>已出厂</a>";
+    } else {
+        return "<a class='layui-btn layui-btn-xs layui-btn-danger'  onclick='factory()'><i class='layui-icon'>&#xe63c;</i>出厂</a>";
+    }
+}
+
+function factory() {
+    openlayer('/sale/toAdd', '', '800px', '450px');
+    //渲染radio
+    layui.form.render();
+    mySubmit('addSubmit', 'POST');
+}
+
+/**
+ *监听头部工具栏事件
+ */
 table.on('toolbar(userTable)', function (obj) {
     switch (obj.event) {
         case 'toAdd':
@@ -119,33 +156,32 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     //禁用当前行，把当前对象的 class="layui-disabled"
 
     let contractId = data.contractId;
+    var status = data.factoryState;
     if (layEvent === 'detail') { //查看
         console.log(contractId);
         openlayer('/contract/toDetail/' + contractId, '合同详情', '100%', '100%');
     } else if (layEvent === 'del') { //删除
-        layer.confirm('真的删除行么', function (index) {
-            layer.close(index);
-            //向服务端发送删除指令
-            myDelete("/contract/" + contractId);
-        });
+        if (status == 1) {
+            layer.msg('已经出厂，不能删除合同');
+            return;
+        } else {
+            layer.confirm('真的删除行么', function (index) {
+                layer.close(index);
+                //向服务端发送删除指令
+                myDelete("/contract/" + contractId);
+            });
+        }
     } else if (layEvent === 'edit') { //编辑
-        // console.log(customerId);
-        openlayer('/contract/toUpdate/' + contractId, '编辑账号', '100%', '100%');
-        layui.form.render();
-        mySubmit('updateSubmit', 'PUT')
-    } else if (layEvent === 'process') {
-        console.log(typeof tr);
-        console.log(tr[2]);
-        console.log(typeof tr[2]);
-        var parentElem = tr[2];
-        var caoZuo = parentElem.getElementsByClassName("layui-table-col-special");
-        console.log(caoZuo);
-        console.log(caoZuo[0]);
-        console.log(typeof caoZuo[0].children[0].children[0]);
-        console.log(caoZuo[0].children[0].children[0]);
-        caoZuo[0].children[0].children[0].setAttribute("style", " pointer-events:none;cursor: default;opacity: 0.6;");
-        caoZuo[0].children[0].children[2].setAttribute("style"," pointer-events:none;cursor: default;opacity: 0.6;");
-        caoZuo[0].children[0].children[3].setAttribute("style", " pointer-events:none;cursor: default;opacity: 0.6;");
+        if (status == 1) {
+            layer.msg('已经出厂，不能编辑合同');
+            return;
+        } else {
+            // console.log(customerId);
+            openlayer('/contract/toUpdate/' + contractId, '编辑账号', '100%', '100%');
+            layui.form.render();
+            mySubmit('updateSubmit', 'PUT')
+        }
+
     }
 });
 

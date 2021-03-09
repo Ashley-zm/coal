@@ -67,7 +67,7 @@ public class ContractController {
     /**
      * 合同管理的查询方法
      * 查询条件封装成ContractQuery对象 query/ContractQuery
-     *
+     * 渲染表格
      * @param query
      * @return
      */
