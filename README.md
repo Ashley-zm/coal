@@ -2,11 +2,10 @@
 
 Technology involved: Spring Boot, MyBatis - Plus, Layui, Thymeleaf, jQuery, MySQL
 
-Information construction is an important symbol for enterprises to improve management level and move towards modern management.In recent years, various industries are deeply discussing how to strengthen enterprise management, research and development to adapt to the characteristics of the enterprise management software system.Management information department is a set of management science, information science, system science and computer science as one of the comprehensive discipline, research is the whole process of information management activities in the enterprise, in order to effectively manage information, provide all kinds of management decision-making information, assist enterprises to carry out modern management.For coal sales enterprises, because of the complexity and variability of production conditions, the particularity of production mode and management mode, in the construction of enterprise information, it is impossible to directly learn from the management information system mode of other industries.Coal sales enterprises should combine the characteristics of the coal sales industry and the actual management of the enterprise, research and develop the management information system to adapt to their actual situation, so as to comprehensively improve the management level of the enterprise.It takes MYSQL as the database technology for the development of the system, IDEA as the development platform, and UML Unified Modeling Language for development and design, so as to ensure the accuracy of coal sales related data, achieve real-time update and dynamic understanding of its development.
-The system is designed to complete the following functions:
+## The system is designed to complete the following functions:
 ## function:
 Customer information module:
-This module is mainly to manage the basic information of customers.
+1.This module is mainly to manage the basic information of customers.
 - Operator can add customer information,
 - You can also view customer details
 - and modify and delete customer information, etc.
