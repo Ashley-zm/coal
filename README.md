@@ -1,3 +1,35 @@
+# Design and Implementation of Coal Sales System Based on SpringBoot+Thymeleaf
+
+Technology involved: Spring Boot, MyBatis - Plus, Layui, Thymeleaf, jQuery, MySQL
+
+Information construction is an important symbol for enterprises to improve management level and move towards modern management.In recent years, various industries are deeply discussing how to strengthen enterprise management, research and development to adapt to the characteristics of the enterprise management software system.Management information department is a set of management science, information science, system science and computer science as one of the comprehensive discipline, research is the whole process of information management activities in the enterprise, in order to effectively manage information, provide all kinds of management decision-making information, assist enterprises to carry out modern management.For coal sales enterprises, because of the complexity and variability of production conditions, the particularity of production mode and management mode, in the construction of enterprise information, it is impossible to directly learn from the management information system mode of other industries.Coal sales enterprises should combine the characteristics of the coal sales industry and the actual management of the enterprise, research and develop the management information system to adapt to their actual situation, so as to comprehensively improve the management level of the enterprise.It takes MYSQL as the database technology for the development of the system, IDEA as the development platform, and UML Unified Modeling Language for development and design, so as to ensure the accuracy of coal sales related data, achieve real-time update and dynamic understanding of its development.
+The system is designed to complete the following functions:
+# # function:
+Customer information module:
+This module is mainly to manage the basic information of customers.
+- Operator can add customer information,
+- You can also view customer details
+- and modify and delete customer information, etc.
+2. Contract management block:
+This module is mainly about the management of the detailed information of the contract signed between the enterprise and the customer.
+- Operator can add signed contract information,
+- You can also view contract details
+- and the corresponding information to modify and delete.
+Weighing management module:
+This module is mainly to collect the information of vehicles to manage the actual coal sales
+- Operator can collect the information when the vehicle enters the plant
+- and factory information.
+4. Statistical management block:
+The module can be carried out on the sale of coal
+- Daily sales volume,
+- Monthly sales statistics,
+- Annual sales statistics,
+- Annual planned production statistics.
+5. System management module:
+This module mainly manages the users and roles of the system.
+- You can assign roles to system users,
+- You can assign permissions to roles.
+
 # 基于SpringBoot+Thymeleaf的煤炭销售系统的设计与实现
 
 涉及到的技术: Spring Boot、Mybatis-plus、layui、thymeleaf、jquery、mysql
