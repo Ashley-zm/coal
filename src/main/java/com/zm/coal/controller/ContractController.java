@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -68,6 +69,7 @@ public class ContractController {
      * 合同管理的查询方法
      * 查询条件封装成ContractQuery对象 query/ContractQuery
      * 渲染表格
+     *
      * @param query
      * @return
      */
@@ -134,18 +136,18 @@ public class ContractController {
 
     /**
      * 新增合同操作
-     *
      * @param contract
      * @return
      */
     @PostMapping
     @ResponseBody
-    public R<Object> q(@RequestBody Contract contract) {
+    public R<Object> add(@RequestBody Contract contract) {
         return ResultUtil.buildR(contractService.save(contract));
     }
 
     /**
      * 更新合同信息
+     *
      * @param id
      * @param model
      * @return
@@ -155,22 +157,47 @@ public class ContractController {
         Contract contract = contractService.getById(id);
         model.addAttribute("contract", contract);
         toAddEvery(model);
-        return "account/accountUpdate";
+        return "contract/contractUpdate";
+    }
+
+    /**
+     * 修改合同信息
+     *
+     * @param contract
+     * @return
+     */
+    @PutMapping
+    @ResponseBody
+    public R<Object> update(@RequestBody Contract contract) {
+        return ResultUtil.buildR(contractService.updateById(contract));
     }
 
     /**
      * 根据contracId查询合同的信息
      * 通过service的Impl实现类中getContractById方法到mapper.java中的接口，
      * 进而mapper.xml对数据库进行查询
+     *
      * @param id
      * @param model
      * @return
      */
     @GetMapping("toDetail/{id}")
-    public String toDetail(@PathVariable Long id,Model model){
+    public String toDetail(@PathVariable Long id, Model model) {
         Contract contract = contractService.getContractById(id);
-        model.addAttribute("contract",contract);
+        model.addAttribute("contract", contract);
         return "contract/contractDetail";
+    }
+
+    /**
+     * 删除出厂信息
+     *
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public R<Object> delete(@PathVariable Long id) {
+        return ResultUtil.buildR(contractService.removeById(id));
     }
 
 }

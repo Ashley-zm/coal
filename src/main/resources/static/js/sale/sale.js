@@ -51,11 +51,11 @@ var tableIns = table.render({
         },
         {
             field: 'profit', title: '利润', align: 'center', width: 110, templet: function (a) {
-                return a.taxes + '元'
+                return a.profit + '元'
             }
         },
         {field: 'totalWeigtht', title: '总重量', align: 'center', width: 110, templet: function (a) {
-                return a.taxes + '吨'
+                return a.totalWeigtht + '吨'
             }},
         {field: 'leaveTime', title: '出厂时间', align: 'center', width: 130},
         {title: '操作', width: 165, align: 'center', toolbar: '#barDemo', fixed: 'right'}

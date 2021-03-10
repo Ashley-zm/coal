@@ -9,7 +9,7 @@ var tableIns = table.render({
     elem: '#contractList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-160',
+    height: 'full-145',
     cellMinWidth: 80,
     url: '/contract/list',//数据接口
     page: true,//开启分页
@@ -22,7 +22,12 @@ var tableIns = table.render({
         };
     },
     cols: [[//表头
-        {type: 'checkbox', fixed: 'left'},
+        {
+            field: 'contractId', title: '合同序号', align: 'center', width: 90,
+            templet: function (c) {
+                return "<a class='contract_Id'>" + c.contractId + "</a>"
+            }
+        },
         {field: 'contractCode', title: '合同编号', align: 'center', width: 90},
         {field: 'customerName', title: '客户姓名', align: 'center', width: 90},
         {field: 'contractName', title: '合同名称', align: 'center', width: 180},
@@ -55,8 +60,7 @@ var tableIns = table.render({
         {
             field: 'factoryState',
             title: '是否出厂', width: 120, align: 'center', fixed: 'right', sort: true,
-            templet: factoryState,
-
+            toolbar: '#buttonTpl',
         },
         {title: '操作', width: 180, align: 'center', toolbar: '#barDemo', fixed: 'right'}
     ]]
@@ -115,27 +119,6 @@ function setState(date) {
 }
 
 /**
- * 判断合同的 出厂 状态
- * @param date
- * @returns {string}
- */
-function factoryState(date) {
-    var factoryState = date.factoryState;
-    if (factoryState == 1) {
-        return "<a class='layui-btn layui-btn-xs layui-btn-normal' ><i class='layui-icon'>&#x1005;</i>已出厂</a>";
-    } else {
-        return "<a class='layui-btn layui-btn-xs layui-btn-danger'  onclick='factory()'><i class='layui-icon'>&#xe63c;</i>出厂</a>";
-    }
-}
-
-function factory() {
-    openlayer('/sale/toAdd', '', '800px', '450px');
-    //渲染radio
-    layui.form.render();
-    mySubmit('addSubmit', 'POST');
-}
-
-/**
  *监听头部工具栏事件
  */
 table.on('toolbar(userTable)', function (obj) {
@@ -163,7 +146,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     } else if (layEvent === 'del') { //删除
         if (status == 1) {
             layer.msg('已经出厂，不能删除合同');
-            return;
+            return ;
         } else {
             layer.confirm('真的删除行么', function (index) {
                 layer.close(index);
@@ -176,12 +159,17 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
             layer.msg('已经出厂，不能编辑合同');
             return;
         } else {
-            // console.log(customerId);
-            openlayer('/contract/toUpdate/' + contractId, '编辑账号', '100%', '100%');
+            openlayer('/contract/toUpdate/' + contractId, '编辑合同', '100%', '100%');
             layui.form.render();
             mySubmit('updateSubmit', 'PUT')
         }
 
+    }else if (layEvent==='factory_out'){
+        console.log(data);
+        openlayer('/sale/toAdd/' + contractId, '出厂订单填写', '800px', '450px');
+        //渲染radio
+        // layui.form.render();
+        // mySubmit('addSubmit', 'POST');
     }
 });
 

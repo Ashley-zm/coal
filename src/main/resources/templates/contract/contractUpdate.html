@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+</head>
+
+<body>
+<form class="layui-form" id="updateForm" th:action="@{/contract}" th:object="${contract}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">合同编号</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="accountId" th:value="*{contractCode}">
+            <input type="text" name="username" placeholder="请输入合同编号" autocomplete="off" class="layui-input"
+                   lay-verify="required|checkUsername" th:value="*{contractCode}" maxlength="20">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">客户姓名</label>
+        <div class="layui-input-block">
+            <select name="customerId" lay-verify="required">
+                <option value="">--请选择--</option>
+                <option value="" th:each="customer:${customers}" th:value="${customer.customerId}"
+                        th:text="${customer.customerName}"
+                        th:selected="${customer.customerId==contract.customerId}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">合同名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="username" placeholder="请输入合同名称" autocomplete="off" class="layui-input"
+                   lay-verify="required|checkUsername" th:value="*{contractName}" maxlength="20">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">销售人</label>
+        <div class="layui-input-block">
+            <select name="accountId" lay-verify="required">
+                <option value="">--请选择--</option>
+                <option value="" th:each="account:${accounts}" th:value="${account.accountId}"
+                        th:text="${account.realName}"
+                        th:selected="${account.accountId==contract.accountId}"></option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品名称</label>
+        <div class="layui-input-block">
+            <select name="productId" lay-verify="required" lay-filter="chiocePayway">
+                <option value="">--请选择--</option>
+                <option value="" th:each="product:${products}" th:value="${product.productId}"
+                        th:text="${product.productName}"
+                        th:selected="${product.productId==contract.productId}"></option>
+                <input id="productName" th:value="${products}" hidden>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">总数量</label>
+        <div class="layui-input-block">
+            <input type="text" name="email" placeholder="请输入产品总数量" autocomplete="off"
+                   class="layui-input" lay-verify="len" id="zong" onkeyup="sum();"
+                    maxlength="100" th:value="*{amount}">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">单价</label>
+        <div class="layui-input-block">
+            <input type="number" name="price" placeholder="请输入产品单价" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="dan"  th:value="*{price}"
+                   maxlength="100">元/吨
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">产品总价</label>
+        <div class="layui-input-block">
+            <input type="number" name="price" placeholder="请输入产品总价" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="he" th:value="*{total}"
+                           maxlength="100">元
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="updateSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script th:inline="javascript">
+    /**
+     * 通过js获取thymleaf从后台传到前台的值
+     * <script th:inline="javascript">
+     *      var msg = [[${products}]];
+     * products绑定的是html中 <input id="productName" th:value="${products}" hidden>
+     *     msg是一个对象数组，我再通过for循环msg[i].XX 来获取id与用户所选择的产品id进行匹配
+     *     进而获取产品的单价price，然后↓↓↓
+     *
+     * 监听select选项
+     * 通过 加监听<select lay-verify="required" lay-filter="chiocePayway" >
+     *     在通过js： form.on('select(chiocePayway)', function (data) {}）
+     * 页面加载完执行监听用户所选择的产品id，并实时通过商品的改变来更新商品的单价
+     */
+    var msg = [[${products}]];
+    layui.use(['form'], function () {
+        var form = layui.form;
+        form.on('select(chiocePayway)', function (data) {
+            // layui.layer.msg(data.value);//得到被选中的值
+            console.log("valID:" + data.value);
+            for (let i = 0; i < msg.length; i++) {
+                console.log("productID" + msg[i].productId);
+                if (msg[i].productId == data.value) {
+                    document.getElementById("dan").value = msg[i].price;
+                    console.log(msg[i].price);
+                }
+            }
+        })
+    });
+</script>
+<script>
+
+    /**
+     * 判断商品单价和数量是否不为空，成立时自动计算商品总金额，并更新到输入框中
+     * 装车费5元/吨，运费100元/吨，卸车费5元/吨，
+     * 商品总金额=（单价+110）*总数量
+     */
+    function sum() {
+        if ($("#dan").val() != '' && $("#zong").val() != '') {
+            document.getElementById("he").value = ($("#dan").val() + 110) * $("#zong").val();
+        }
+    }
+
+</script>
+</body>
+
+</html>

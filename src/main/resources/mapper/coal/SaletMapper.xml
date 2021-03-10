@@ -13,7 +13,7 @@
             p.p_total,
             s.*
         FROM sale s
-        INNER JOIN contract c ON s.contract_id= c.contract_id=1
+        INNER JOIN contract c ON s.contract_id= c.contract_id
         INNER JOIN product p ON p.product_id=c.product_id
         ${ew.customSqlSegment}
     </select>
