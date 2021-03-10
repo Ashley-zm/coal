@@ -77,8 +77,6 @@ public class SaleController {
     @GetMapping("toAdd/{id}")
     public String toAdd(@PathVariable Long id, Model model) {
         Contract contracts = contractService.getContractById(id);
-        // model.addAttribute("contract", contract);
-        // List<Contract> contracts = contractService.list(Wrappers.<Contract>lambdaQuery().orderByAsc(Contract::getContractId));
         model.addAttribute("contracts", contracts);
         return "sale/saleAdd";
     }

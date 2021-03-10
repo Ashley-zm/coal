@@ -166,7 +166,9 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
 
     }else if (layEvent==='factory_out'){
         console.log(data);
+        console.log(contractId);
         openlayer('/sale/toAdd/' + contractId, '出厂订单填写', '800px', '450px');
+
         //渲染radio
         // layui.form.render();
         // mySubmit('addSubmit', 'POST');
