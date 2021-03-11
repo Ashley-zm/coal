@@ -3,6 +3,7 @@ package com.zm.coal.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,8 +17,7 @@ import java.time.LocalDateTime;
  * @Version 1.0
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Sale extends BaseEntity{
+public class Sale{
     private static final long serialVersionUID = 1L;
 
     /**
@@ -77,6 +77,11 @@ public class Sale extends BaseEntity{
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime leaveTime;
 
+    /**
+     * 逻辑删除标识(0、否 1、是)
+     * @TableLogic在字段上加上这个注解再执行BaseMapper的删除方法时，删除方法会变成修改
+     */
+    private Integer deleted;
     /**
      * 产品名称(不在sale表中，使用注解
      *

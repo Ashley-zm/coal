@@ -16,6 +16,7 @@ function openlayer(url, title, wd, ht) {
     });
     $.ajaxSettings.async = true;
 }
+
 /**
  * 监听提交事件
  * @param filter
@@ -97,9 +98,9 @@ layui.use(["jquery", 'form', 'layer'],
                     return '昵称至少得5个字符啊';
                 }
             },
-            len: function (value) {
-                if (value < 0) {
-                    return '数值必须大于零';
+            number: function (e) {
+                if (e < 0 || !e || isNaN(e)) {
+                    return '只能填写数字 或 数值必须大于零';
                 }
             },
             passw: [/(.+){6,12}$/, '密码必须6到12位'],
@@ -108,24 +109,15 @@ layui.use(["jquery", 'form', 'layer'],
                     return '两次密码不一致';
                 }
             },
-            otherReq: function (value, item) {
-                var $ = layui.$;
-                var verifyName = $(item).attr('name')
-                    , verifyType = $(item).attr('type')
-                    , formElem = $(item).parents('.layui-form')//获取当前所在的form元素，如果存在的话
-                    , verifyElem = formElem.find('input[name=' + verifyName + ']')//获取需要校验的元素
-                    , isTrue = verifyElem.is(':checked')//是否命中校验
-                    , focusElem = verifyElem.next().find('i.layui-icon'); //焦点元素
-                if (!isTrue || !value) {
-                    //定位焦点
-                    focusElem.css(verifyType == 'radio' ? {"color": "#FF5722"} : {"border-color": "#FF5722"});
-                    //对非输入框设置焦点
-                    focusElem.first().attr("tabIndex", "1").css("outline", "0").blur(function () {
-                        focusElem.css(verifyType == 'radio' ? {"color": ""} : {"border-color": ""});
-                    }).focus();
-                    return '必填项不能为空';
-                }
-            }
+            required: [/[\S]+/, "必填项不能为空"],
+            phone: [/^1\d{10}$/, "请输入正确的手机号"],
+            email: [/^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/, "邮箱格式不正确"],
+            url: [/(^#)|(^http(s*):\/\/[^\s]+\.[^\s]+)/, "链接格式不正确"],
+            number: function (e) {
+                if (!e || isNaN(e)) return "只能填写数字"
+            },
+            date: [/^(\d{4})[-\/](\d{1}|0\d{1}|1[0-2])([-\/](\d{1}|0\d{1}|[1-2][0-9]|3[0-1]))*$/, "日期格式不正确"],
+            identity: [/(^\d{15}$)|(^\d{17}(x|X|\d)$)/, "请输入正确的身份证号"]
         });
     }
 );

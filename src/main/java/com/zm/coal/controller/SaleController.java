@@ -8,9 +8,11 @@ import com.baomidou.mybatisplus.extension.api.R;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.zm.coal.entity.Contract;
+import com.zm.coal.entity.Product;
 import com.zm.coal.entity.Sale;
 import com.zm.coal.query.SaleQuery;
 import com.zm.coal.service.ContractService;
+import com.zm.coal.service.ProductService;
 import com.zm.coal.service.SaleService;
 import com.zm.coal.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class SaleController {
 
     @Autowired
     private ContractService contractService;
+
+    @Autowired
+    private ProductService productService;
 
     /**
      * 跳转到出厂销售列表页
@@ -83,13 +88,30 @@ public class SaleController {
 
     /**
      * 新增出厂信息
-     *
      * @param sale
      * @return
      */
+    @PostMapping
+    @ResponseBody
     public R<Object> add(@RequestBody Sale sale) {
+        Long contractId = sale.getContractId();
+        Contract contract = contractService.getById(contractId);
+        Long productId = contract.getProductId();
+        double amount = contract.getAmount();
+
+        Product product = productService.getById(productId);
+        double pTotal = product.getPTotal();
+
+        double totalUpdate=pTotal-amount;
+        System.out.println("totalUpdate:"+totalUpdate);
+        product.setPTotal(totalUpdate);
+        contract.setFactoryState(1);
+        ResultUtil.buildR(productService.updateById(product));
+        ResultUtil.buildR(contractService.updateById(contract));
+
         return ResultUtil.buildR(saleService.save(sale));
     }
+
 
 
 }

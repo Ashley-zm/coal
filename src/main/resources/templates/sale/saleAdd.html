@@ -7,79 +7,72 @@
     <link rel="stylesheet" th:href="@{/css/public.css}">
 </head>
 <body>
-<form class="layui-form " id="addForm" method="post" th:action="@{/sale}">
+<form class="layui-form " id="addForm" method="post" th:action="@{/sale}" style="margin-top: 20px;margin-left: 8%">
     <div class="layui-form-item">
         <label class="layui-form-label required">合同编号</label>
-        <div class="layui-input-block" th:object="${contracts}">
+        <div class="layui-input-inline" th:object="${contracts}">
             <input type="text" name="contractId" autocomplete="off" class="layui-input"
                    lay-verify="required" maxlength="20" th:value="*{contractCode}">
+            <input type="number" name="contractId"  autocomplete="off" class="layui-input"
+                   lay-verify="len" th:value="*{contractId}" maxlength="50" style="display:none">
             <input type="number" name="amount" id="amount" autocomplete="off" class="layui-input"
-                   lay-verify="len" th:value="*{amount}" maxlength="100">吨
+                   lay-verify="len" th:value="*{amount}" maxlength="50" style="display:none">
             <input type="number" name="price" th:value="*{price}" id="price" autocomplete="off" class="layui-input"
-                   lay-verify="len" maxlength="100">元
+                   lay-verify="len" maxlength="50"style="display:none">
             <input type="number" name="total" th:value="*{total}" id="total" autocomplete="off" class="layui-input"
-                   lay-verify="len" maxlength="100">元
+                   lay-verify="len" maxlength="50" style="display:none">
         </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label required">车牌号</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="carCode" placeholder="请输入车牌号" autocomplete="off" class="layui-input"
                    lay-verify="required" maxlength="20">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">司机姓名</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="driverName" placeholder="请输入司机姓名"
                    autocomplete="off" class="layui-input" lay-verify="required" maxlength="20">
         </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label required">手机号码</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="driverPhone" placeholder="请输入手机号码" autocomplete="off" class="layui-input"
-                   lay-verify="required" maxlength="50">
+                   lay-verify="phone" maxlength="50">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">车皮重量</label>
-        <div class="layui-input-block">
-            <input type="number" id="car" name="carWeigth" placeholder="请输入车皮重量" autocomplete="off" class="layui-input"
-                   lay-verify="required" maxlength="20">吨
+        <div class="layui-input-inline">
+            <input id="car" name="carWeigth" placeholder="请输入车皮重量" autocomplete="off" class="layui-input"
+                   lay-verify="number" maxlength="50"><span style="position: absolute;top: 9px;left: 200px">吨</span>
         </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label required">产品利润</label>
-        <div class="layui-input-block">
-            <input type="number" id="profit" name="profit" autocomplete="off" class="layui-input"
-                   lay-verify="len" maxlength="100" readonly="readonly">元
+        <div class="layui-input-inline">
+            <input  id="profit" name="profit" autocomplete="off" class="layui-input"
+                   lay-verify="number" maxlength="100" readonly="readonly"><span style="position: absolute;top: 9px;left: 200px">元</span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">产品实际纳税</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="number" name="taxes" id="taxes" autocomplete="off" readonly="readonly"
-                   class="layui-input" lay-verify="len" maxlength="100">元
+                   class="layui-input" lay-verify="number" maxlength="100"><span style="position: absolute;top: 9px;left: 200px">元</span>
         </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label required">总重量</label>
-        <div class="layui-input-block">
-            <input type="number" id="weight" name="total" autocomplete="off" class="layui-input"
-                   lay-verify="len" maxlength="100">吨
+        <div class="layui-input-inline">
+            <input type="number" id="weight" name="totalWeigtht" autocomplete="off" class="layui-input" readonly="readonly"
+                   lay-verify="number" maxlength="100"><span style="position: absolute;top: 9px;left: 200px">吨</span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">出厂时间</label>
         <div class="layui-input-inline">
-            <input autocomplete="off" name="effectiveTime" id="leaveTime" class="layui-input" placeholder="出厂时间">
+            <input autocomplete="off" name="leaveTime" id="leaveTime" class="layui-input" placeholder="出厂时间">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin-top: 30px;margin-left: 18%">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="addSubmit">立即提交</button>
-            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
@@ -99,7 +92,6 @@
     });
 </script>
 <script>
-
     /**
      * 纳税
      * 实际纳税=(单价-单价/1.6)/1.13*13%*数量
@@ -114,7 +106,7 @@
     console.log("单价" + price);
     console.log("总价" + total / 10000);
     console.log("总数量" + amount);
-    
+
     taxes = (price - price / 1.6) / 1.13 * 0.13 * amount;
     profit = total - (price - price / 1.6) * amount - taxes;
     console.log("纳税" + parseFloat(taxes));
@@ -128,12 +120,10 @@
      */
     $("#car").bind('input porpertychange', function () {
         var car = $("#car").val();
-        var weight = parseFloat(amount) + parseFloat(car);
+        var weight = parseFloat(amount) + parseInt(car);
         document.getElementById("weight").value = weight;
         console.log(weight);
     })
-
-
 </script>
 </body>
 </html>
