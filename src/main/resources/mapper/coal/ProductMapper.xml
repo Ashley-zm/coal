@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zm.coal.mapper.ProductMapper">
+
+    <!--    根据productId查询合同的信息，对应Mapper.java中的接口-->
+    <select id="selectProductById" resultType="com.zm.coal.entity.Product">
+        SELECT * FROM product
+        where product_id=#{id}
+    </select>
 </mapper>

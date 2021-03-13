@@ -4,10 +4,12 @@ var tableIns = table.render({
     elem: '#saleList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-100',
+    height: 'full-110',
     cellMinWidth: 80,
     url: '/sale/list',//数据接口
     page: true,//开启分页
+    limits: [8, 10, 15, 20],
+    limit: 8,//每页默认显示的数量
     parseData: function (res) { //res 即为原始返回的数据
         return {
             "code": res.code, //解析接口状态

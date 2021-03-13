@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements ProductService  {
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean updateProduct(Product product) {
-        return false;
+    public Product getProductById(Long id) {
+        /**
+         * 对应 mapper 中的接口的方法 selectProductById
+         */
+        return baseMapper.selectProductById(id);
     }
 }

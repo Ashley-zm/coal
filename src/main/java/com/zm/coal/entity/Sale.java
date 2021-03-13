@@ -128,4 +128,11 @@ public class Sale{
     @TableField(exist = false)
     private double total;
 
+    /**
+     * SaleMapper.xml 中的  count(s.sale_id) count
+     * count 查询数据时 相同数据进行的统计，别称 count，表中不是真实存在的字段名
+     */
+    @TableField(exist = false)
+    private double count;
+
 }

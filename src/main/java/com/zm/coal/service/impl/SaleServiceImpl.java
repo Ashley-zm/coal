@@ -10,6 +10,8 @@ import com.zm.coal.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Author ZhuMei
  * @Date 2021/3/8 23:01
@@ -28,5 +30,16 @@ public class SaleServiceImpl extends ServiceImpl<SaleMapper, Sale> implements Sa
     @Override
     public IPage<Sale> salePage(Page<Sale> page, Wrapper<Sale> wrapper) {
         return baseMapper.salePage(page, wrapper);
+    }
+
+
+    @Override
+    public List<Sale> echarsList() {
+        return baseMapper.echarsListSelect();
+    }
+
+    @Override
+    public List<Sale> echarsListAll() {
+        return baseMapper.echarsListSelectAll();
     }
 }

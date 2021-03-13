@@ -10,4 +10,5 @@ import com.zm.coal.entity.Product;
  */
 public interface ProductMapper extends BaseMapper<Product> {
 
+    Product selectProductById(Long id);
 }

@@ -8,6 +8,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zm.coal.entity.Sale;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 /**
  * @Author ZhuMei
  * @Date 2021/3/8 23:02
@@ -21,5 +23,13 @@ public interface SaleMapper extends BaseMapper<Sale> {
      * @return
      */
     IPage<Sale> salePage(Page<Sale> page, @Param(Constants.WRAPPER) Wrapper<Sale> wrapper);
+
+    /**
+     * 渲染 echarts 所需的信息
+     * @return
+     */
+    List<Sale> echarsListSelect();
+
+    List<Sale> echarsListSelectAll();
 
 }

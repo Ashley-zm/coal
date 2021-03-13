@@ -14,8 +14,8 @@
     <div class="layui-header">
         <div class="layui-logo">煤炭销售管理系统</div>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="javascript:;" >
-<!--                -->
+            <li class="layui-nav-item"><a href="javascript:;">
+                <!--                -->
                 <span th:text="${session.account.realName}"></span>
                 <input id="myId" th:value="${session.account.accountId}" style="display: none;"></input>
             </a>
@@ -44,8 +44,14 @@
                                 th:text="${sub.resourceName}"></a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">销售规则</a></li>
-                <li class="layui-nav-item"><a href="">商品简介</a></li>
+                <li class="layui-nav-item">
+                    <a href="">
+                        <i class="layui-icon layui-icon-list"></i>
+                        <span>销售规则</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item"><a href=""><i class="layui-icon layui-icon-read"></i><span>商品简介</span></a>
+                </li>
             </ul>
         </div>
     </div>
@@ -54,7 +60,7 @@
         <!-- 内容主体区域 -->
         <div class="layui-tab" lay-filter="menu" lay-allowClose="true">
             <ul class="layui-tab-title">
-                <li class="layui-this" >欢迎页</li>
+                <li class="layui-this">欢迎页</li>
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">欢迎使用本系统</div>

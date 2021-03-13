@@ -39,6 +39,9 @@ function mySubmit(filter, type, func) {
             success: function (res) {
                 if (res.code == 0) {
                     layer.closeAll();
+                    layer.msg('成功！', {
+                        icon: 1
+                    });
                     query();
                 } else {
                     layer.alert(res.msg);

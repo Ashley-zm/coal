@@ -17,4 +17,52 @@
         INNER JOIN product p ON p.product_id=c.product_id
         ${ew.customSqlSegment}
     </select>
+    <select id="echarsListSelect" resultType="com.zm.coal.entity.Sale">
+        select
+            DATE_FORMAT(s.leave_time,'%Y-%m-%d') days,
+            count(s.sale_id) count,
+            s.contract_id,
+            s.leave_time,
+            SUM(s.taxes) taxes,
+            SUM(s.profit) profit,
+            a.*
+        from sale s
+        inner JOIN contract c
+        on c.contract_id=s.contract_id
+        INNER JOIN (
+            SELECT c.contract_id,p.product_name ,p.price,c.amount,c.total
+            FROM product p
+            INNER JOIN contract c
+            ON c.product_id=p.product_id
+        ) a
+        ON a.contract_id=s.contract_id
+        group by days
+        order by s.leave_time   ASC
+    </select>
+    <select id="echarsListSelectAll" resultType="com.zm.coal.entity.Sale">
+        select
+            DATE_FORMAT(s.leave_time, '%Y-%m')  months,
+            s.contract_id,
+            s.leave_time,
+            SUM(s.taxes) taxes,
+            SUM(s.profit) profit,
+            a.*
+        from sale s
+        inner JOIN contract c
+        on c.contract_id=s.contract_id
+        INNER JOIN (
+        SELECT
+            c.contract_id,
+            p.product_name ,
+            p.price,
+            c.amount,
+            c.total
+        FROM product p
+        INNER JOIN contract c
+        ON c.product_id=p.product_id
+        ) a
+        ON a.contract_id=s.contract_id
+        GROUP BY months
+        order by s.leave_time   ASC
+    </select>
 </mapper>

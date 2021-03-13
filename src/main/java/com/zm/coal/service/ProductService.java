@@ -13,8 +13,8 @@ public interface ProductService extends IService<Product> {
 
     /**
      * 根据出厂信息来更新产品的总数量
-     * @param product
+     * @param id
      * @return
      */
-    boolean updateProduct(Product product);
+    Product getProductById(Long id);
 }

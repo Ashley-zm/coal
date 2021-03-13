@@ -9,10 +9,12 @@ var tableIns = table.render({
     elem: '#contractList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height: 'full-145',
+    height: 'full-135',
     cellMinWidth: 80,
     url: '/contract/list',//数据接口
     page: true,//开启分页
+    limits: [7, 10, 15, 20],
+    limit: 7,//每页默认显示的数量
     parseData: function (res) { //res 即为原始返回的数据
         return {
             "code": res.code, //解析接口状态
@@ -137,6 +139,9 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
     //禁用当前行，把当前对象的 class="layui-disabled"
+    var wei = tr[1].firstChild.lastChild.childNodes[0].checked;//合同效力待定
+    var zhong = tr[1].firstChild.lastChild.childNodes[3].checked;//合同状态生效中
+    var wu = tr[1].firstChild.lastChild.childNodes[6].checked;//合同状态无效
 
     let contractId = data.contractId;
     var status = data.factoryState;
@@ -145,8 +150,10 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         openlayer('/contract/toDetail/' + contractId, '合同详情', '100%', '100%');
     } else if (layEvent === 'del') { //删除
         if (status == 1) {
-            layer.msg('已经出厂，不能删除合同');
-            return ;
+            layer.msg('已经出厂，不能删除合同！', {
+                icon: 0
+            });
+            return;
         } else {
             layer.confirm('真的删除行么', function (index) {
                 layer.close(index);
@@ -155,21 +162,41 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
             });
         }
     } else if (layEvent === 'edit') { //编辑
-        if (status == 1) {
-            layer.msg('已经出厂，不能编辑合同');
-            return;
+        if (wu) {
+            layer.msg('合同已无效，不能编辑合同！', {
+                icon: 2
+            });
         } else {
-            openlayer('/contract/toUpdate/' + contractId, '编辑合同', '100%', '100%');
-            layui.form.render();
-            mySubmit('updateSubmit', 'PUT')
+            if (status == 1) {
+                layer.msg('已经出厂，不能编辑合同！',{
+                    icon: 0
+                });
+                return;
+            } else {
+                openlayer('/contract/toUpdate/' + contractId, '编辑合同', '100%', '100%');
+                layui.form.render();
+                mySubmit('updateSubmit', 'PUT');
+            }
         }
-    }else if (layEvent==='factory_out'){
+
+    } else if (layEvent === 'factory_out') {//出厂
         console.log(data);
         console.log(contractId);
-        openlayer('/sale/toAdd/' + contractId, '出厂订单填写', '800px', '450px');
-        //渲染radio
-        layui.form.render();
-        mySubmit('addSubmit', 'POST');
+        if (wu) {
+            layer.msg('合同已无效，不能进行出厂！', {
+                icon: 2
+            });
+        } else if (wei) {
+            layer.msg('合同还未生效，不能进行出厂！', {
+                icon: 0
+            });
+        } else {
+            openlayer('/sale/toAdd/' + contractId, '出厂订单填写', '800px', '450px');
+            //渲染radio
+            layui.form.render();
+            mySubmit('addSubmit', 'POST');
+        }
+
     }
 });
 

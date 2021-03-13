@@ -103,7 +103,6 @@ public class SaleController {
         double pTotal = product.getPTotal();
 
         double totalUpdate=pTotal-amount;
-        System.out.println("totalUpdate:"+totalUpdate);
         product.setPTotal(totalUpdate);
         contract.setFactoryState(1);
         ResultUtil.buildR(productService.updateById(product));
@@ -112,6 +111,30 @@ public class SaleController {
         return ResultUtil.buildR(saleService.save(sale));
     }
 
+    /**
+     * 问题：map和list
+     * @param model
+     * @return
+     */
+    @RequestMapping("/saleAll")
+    public String myECharts(Model model){
+        List<Sale> echarsList = saleService.echarsList();
+        model.addAttribute("echarsList",echarsList);
+        return "sale/saleAll";
+    }
 
+    @RequestMapping("/saleDay")
+    public String myEChartsDay(Model model){
+        List<Sale> echarsListAll = saleService.echarsList();
+        model.addAttribute("echarsListAll",echarsListAll);
+        return "sale/saleDay";
+    }
+
+    @RequestMapping("/saleMonth")
+    public String myEChartsMonth(Model model){
+        List<Sale> echarsListMonth = saleService.echarsList();
+        model.addAttribute("echarsListMonth",echarsListMonth);
+        return "sale/saleMonth";
+    }
 
 }
