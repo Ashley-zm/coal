@@ -25,11 +25,26 @@ public interface SaleMapper extends BaseMapper<Sale> {
     IPage<Sale> salePage(Page<Sale> page, @Param(Constants.WRAPPER) Wrapper<Sale> wrapper);
 
     /**
-     * 渲染 echarts 所需的信息
+     * 产品的总销售量、总销售额、
+     * @return
+     */
+    List<Sale> echarsListSelectAll();
+
+    /**
+     * 日纳税-利润
      * @return
      */
     List<Sale> echarsListSelect();
 
-    List<Sale> echarsListSelectAll();
+    /**
+     * 产品各种类的月销售量
+     * @return
+     */
+    List<Sale> echarsListSelectMonth();
 
+    /**
+     * 产品各种类的年销售量
+     * @return
+     */
+    List<Sale> echarsListSelectYear();
 }

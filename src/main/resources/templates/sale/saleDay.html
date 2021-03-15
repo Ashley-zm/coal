@@ -40,7 +40,7 @@
 
     var echarsList = {
         data: [
-            [# th:each = "echart:${echarsListAll}"]
+            [# th:each = "echart:${echarsListDay}"]
                [[${echart}]],
             [/]
         ]
@@ -53,8 +53,8 @@
     var pDate = [];//产品利润集合
     for (let i = 0; i < echarsList.data.length; i++) {
         console.log(echarsList.data[i]);
-        pProfit.push(parseFloat(echarsList.data[i].profit/1000).toFixed(2));
-        pTaxes.push(parseFloat(echarsList.data[i].taxes/1000).toFixed(2));
+        pProfit.push(parseFloat(echarsList.data[i].profit).toFixed(2));
+        pTaxes.push(parseFloat(echarsList.data[i].taxes).toFixed(2));
         pDate.push(echarsList.data[i].leaveTime.substring(0,10));
     }
     console.log(pTaxes);
@@ -75,7 +75,7 @@
         yAxis: {
             type: 'value',
             axisLabel: {
-                formatter: '{value} 千元'
+                formatter: '{value} 元'
             }
         },
         tooltip: {

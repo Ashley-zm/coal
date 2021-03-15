@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MyInterceptor())//new MyInterceptor()是我们自定义的拦截器类对象
                 .addPathPatterns("/**")//  /**代表拦截所有请求。动态参数，多个参数以逗号隔开
-                .excludePathPatterns("/my/**","/auth/captcha","/auth/login", "/auth/logout", "/webjars/**"
-                        , "/js/**", "/css/**","/", "/favicon.ico", "/error");//不拦截请求。这也是个动态参数，有多个不拦截的请求时，以逗号隔开
+                .excludePathPatterns("/my/**", "/auth/captcha", "/auth/login", "/auth/logout", "/webjars/**"
+                        , "/js/**", "/css/**", "/img/**", "/", "/favicon.ico", "/error");//不拦截请求。这也是个动态参数，有多个不拦截的请求时，以逗号隔开
     }
 }

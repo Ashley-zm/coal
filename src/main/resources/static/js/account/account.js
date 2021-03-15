@@ -9,7 +9,7 @@ var tableIns = table.render({
     elem: '#accountList',
     toolbar: true,
     toolbar: '#toolbar', //开启头部工具栏，并为其绑定左侧模板
-    height:  'full-200',
+    height:  'full-110',
     url: '/account/list',//数据接口
     page: true,//开启分页
     parseData: function (res) { //res 即为原始返回的数据

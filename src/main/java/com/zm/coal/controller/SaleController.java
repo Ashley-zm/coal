@@ -112,29 +112,63 @@ public class SaleController {
     }
 
     /**
-     * 问题：map和list
+     * 产品的总销售量、总销售额、日纳税-利润
      * @param model
      * @return
      */
     @RequestMapping("/saleAll")
     public String myECharts(Model model){
-        List<Sale> echarsList = saleService.echarsList();
-        model.addAttribute("echarsList",echarsList);
+        List<Sale> echarsListAll = saleService.echarsListAll();
+        model.addAttribute("echarsListAll",echarsListAll);
         return "sale/saleAll";
     }
 
+    /**
+     * 总销售额
+     * @param model
+     * @return
+     */
+    @RequestMapping("/saleMoney")
+    public String myEChartsMoney(Model model){
+        List<Sale> echarsListAll = saleService.echarsListAll();
+        model.addAttribute("echarsListAll",echarsListAll);
+        return "sale/saleMoney";
+    }
+
+    /**
+     * 日纳税-利润
+     * @param model
+     * @return
+     */
     @RequestMapping("/saleDay")
     public String myEChartsDay(Model model){
-        List<Sale> echarsListAll = saleService.echarsList();
-        model.addAttribute("echarsListAll",echarsListAll);
+        List<Sale> echarsListDay = saleService.echarsList();
+        model.addAttribute("echarsListDay",echarsListDay);
         return "sale/saleDay";
     }
 
+    /**
+     * 产品各种类的月销售量
+     * @param model
+     * @return
+     */
     @RequestMapping("/saleMonth")
     public String myEChartsMonth(Model model){
-        List<Sale> echarsListMonth = saleService.echarsList();
+        List<Sale> echarsListMonth = saleService.echarsListMonth();
         model.addAttribute("echarsListMonth",echarsListMonth);
         return "sale/saleMonth";
+    }
+
+    /**
+     * 产品各种类的月销售量
+     * @param model
+     * @return
+     */
+    @RequestMapping("/saleYear")
+    public String myEChartsYear(Model model){
+        List<Sale> echarsListYear = saleService.echarsListYear();
+        model.addAttribute("echarsListYear",echarsListYear);
+        return "sale/saleYear";
     }
 
 }

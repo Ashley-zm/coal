@@ -23,12 +23,29 @@ public interface SaleService  extends IService<Sale> {
     IPage<Sale> salePage(Page<Sale> page, Wrapper<Sale> wrapper);
 
     /**
-     *
+     *产品的总销售量、总销售额、
+     * @return
+     */
+    List<Sale> echarsListAll();
+
+    /**
+     * 日纳税-利润
      * @return
      */
     List<Sale> echarsList();
 
-    List<Sale> echarsListAll();
+    /**
+     * 产品各种类的月销售量
+     * @return
+     */
+    List<Sale> echarsListMonth();
+
+
+    /**
+     * 产品各种类的年销售量
+     * @return
+     */
+    List<Sale> echarsListYear();
 
 
 }

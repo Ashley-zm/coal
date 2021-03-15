@@ -17,6 +17,29 @@
         INNER JOIN product p ON p.product_id=c.product_id
         ${ew.customSqlSegment}
     </select>
+<!--产品的总销售量、总销售额、-->
+    <select id="echarsListSelectAll" resultType="com.zm.coal.entity.Sale">
+        select
+            s.sale_id,
+            s.leave_time,
+            t.product_name,
+            sum(t.amount) amount,
+            sum(t.total) total,
+            sum(s.profit) profit,
+            SUM(s.taxes)taxes,
+            t.product_id
+        from sale s
+        INNER JOIN
+        (
+	        SELECT c.contract_id,p.product_name ,p.product_id,p.price,c.amount,c.total
+            FROM product p
+            INNER JOIN contract c
+            ON c.product_id=p.product_id
+        )t
+        on t.contract_id=s.contract_id
+        GROUP BY t.product_id;
+    </select>
+<!--    日纳税-利润-->
     <select id="echarsListSelect" resultType="com.zm.coal.entity.Sale">
         select
             DATE_FORMAT(s.leave_time,'%Y-%m-%d') days,
@@ -39,30 +62,43 @@
         group by days
         order by s.leave_time   ASC
     </select>
-    <select id="echarsListSelectAll" resultType="com.zm.coal.entity.Sale">
+<!--    产品各种类的月销售量-->
+    <select id="echarsListSelectMonth" resultType="com.zm.coal.entity.Sale">
         select
-            DATE_FORMAT(s.leave_time, '%Y-%m')  months,
-            s.contract_id,
+            s.sale_id,
             s.leave_time,
-            SUM(s.taxes) taxes,
-            SUM(s.profit) profit,
-            a.*
+            t.product_name,
+            sum(t.amount) amount,
+            t.product_id
         from sale s
-        inner JOIN contract c
-        on c.contract_id=s.contract_id
-        INNER JOIN (
-        SELECT
-            c.contract_id,
-            p.product_name ,
-            p.price,
-            c.amount,
-            c.total
-        FROM product p
-        INNER JOIN contract c
-        ON c.product_id=p.product_id
-        ) a
-        ON a.contract_id=s.contract_id
-        GROUP BY months
-        order by s.leave_time   ASC
+        INNER JOIN
+        (
+	        SELECT c.contract_id,p.product_name ,p.product_id,p.price,c.amount,c.total
+            FROM product p
+            INNER JOIN contract c
+            ON c.product_id=p.product_id
+        )t
+        on t.contract_id=s.contract_id
+        where date_format(leave_time,'%Y%m')=date_format(curtime(),'%Y%m')
+        GROUP BY t.product_id;
+    </select>
+    <select id="echarsListSelectYear" resultType="com.zm.coal.entity.Sale">
+        select
+            s.sale_id,
+            s.leave_time,
+            t.product_name,
+            sum(t.amount) amount,
+            t.product_id
+        from sale s
+        INNER JOIN
+        (
+	        SELECT c.contract_id,p.product_name ,p.product_id,p.price,c.amount,c.total
+            FROM product p
+            INNER JOIN contract c
+            ON c.product_id=p.product_id
+        )t
+        on t.contract_id=s.contract_id
+        where date_format(leave_time,'%Y')=date_format(curtime(),'%Y')
+        GROUP BY t.product_id;
     </select>
 </mapper>

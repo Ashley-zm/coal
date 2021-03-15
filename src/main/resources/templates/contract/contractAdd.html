@@ -5,19 +5,43 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/css/public.css}">
+    <style>
+        .layui-input {
+            border-top: 0px !important;
+            border-left: 0px !important;
+            border-right: 0px !important;
+            width: 160px !important;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 17px;
+            margin-left: 10px;
+        }
+
+        .layui-form-label {
+            width: 110px !important;
+        }
+
+        .text-main {
+            margin-left: 32px;
+            padding-top: 6px;
+        }
+
+    </style>
 </head>
 <body>
 <form class="layui-form " id="addForm" method="post" th:action="@{/contract}">
     <div class="layui-form-item">
-        <label class="layui-form-label required">合同编号</label>
+        <label class="layui-form-label required">合同名称</label>
         <div class="layui-input-block">
-            <input type="text" name="contractCode" placeholder="请输入合同编号" autocomplete="off" class="layui-input"
-                   lay-verify="required" maxlength="20">
+            <input type="text" name="contractName" placeholder="请输入合同名称" autocomplete="off" class="layui-input"
+                   lay-verify="required" maxlength="50">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">客户姓名</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">买受人：</label>
+        <div class="layui-input-block" style="width: 220px;">
             <select name="customerId" lay-verify="required">
                 <option value="">--请选择--</option>
                 <option value="" th:each="customer:${customers}" th:value="${customer.customerId}"
@@ -27,15 +51,8 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">合同名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="contractName" placeholder="请输入合同名称" autocomplete="off" class="layui-input"
-                   lay-verify="required" maxlength="50">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">销售人</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">出卖人:</label>
+        <div class="layui-input-block" style="width: 220px;">
             <select name="accountId" lay-verify="required">
                 <option value="">--请选择销售人--</option>
                 <option value="" th:each="account:${accounts}" th:value="${account.accountId}"
@@ -45,8 +62,20 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">产品名称</label>
         <div class="layui-input-block">
+            <span>为明确合同双方的权利与义务，买受人(以下简称:“甲方”〉和出卖人（以下简称:“乙方”)双方本着平等互利、自愿一致、协同发展的原则，
+                就本年度煤炭买卖事宜，依据《中华人民共和国合同法》,经友好协商,达成一致意见,共同签订本买卖合同(以下简称“本合同”)，合同编号为：
+            <input type="text" name="contractCode" placeholder="请输入合同编号" autocomplete="off" class="layui-input"
+                   lay-verify="required" maxlength="20" style="display: inline-block;">。
+            </span>
+        </div>
+    </div>
+
+    <!--第一条煤炭品名、数量及单价-->
+    <div class="layui-form-item">
+        <p class="title">第一条煤炭品名、数量及单价</p>
+        <label class="layui-form-label required">1.1 煤炭品名：</label>
+        <div class="layui-input-block" style="width: 220px;">
             <select name="productId" lay-verify="required" lay-filter="chiocePayway">
                 <option value="">--请选择产品--</option>
                 <option th:each="product:${products}" th:value="${product.productId}"
@@ -58,29 +87,96 @@
     </div>
 
     <div class="layui-form-item">
-        <label class="layui-form-label required">产品总数量</label>
-        <div class="layui-input-block">
-            <input type="number" name="amount" placeholder="请输入产品总数量" autocomplete="off" class="layui-input"
-                   lay-verify="len" id="zong" onkeyup="sum();" maxlength="100">吨
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">产品单价</label>
+        <label class="layui-form-label required">1.2 煤炭单价：</label>
         <div class="layui-input-block">
             <input type="number" name="price" placeholder="请输入产品单价" autocomplete="off" class="layui-input"
-                   lay-verify="len" id="dan"
-                   maxlength="100">元/吨
+                   lay-verify="len" id="dan" maxlength="100" style="display: inline-block;">元/吨
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">产品总价</label>
+        <label class="layui-form-label required">1.3 煤炭总数量：</label>
+        <div class="layui-input-block">
+            <span>本合同是年度煤炭买卖合同。双方约定，乙方向甲方提供符合质量要求的煤炭</span>
+            <input type="number" name="amount" placeholder="请输入产品总数量" autocomplete="off" class="layui-input"
+                   lay-verify="len" id="zong" onkeyup="sum();" maxlength="100" style="display: inline-block;">吨。
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">1.4计划数量：</label>
+        <div class="layui-input-block">
+            <p class="text-main">甲乙双方必须严格按上述计划量执行，如要调整合同煤炭数量，需甲乙双方共同协商同意后进行调整。</p>
+        </div>
+    </div>
+    <!--  第二条交货方式和交货地   -->
+    <div class="layui-form-item">
+        <p class="title">第二条交货方式和交货地</p>
+        <label class="layui-form-label required">2.1交货方式：</label>
+        <div class="layui-input-block">
+            <p class="text-main">装运港甲方指定的场地交货。</p>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">2.2交货地：</label>
+        <div class="layui-input-block">
+            <p class="text-main">煤炭一旦到达甲方场地，所有权及相关风险即从乙方转移到甲方，除进港检验费和过磅费外的其它费用全部由甲方承担。</p>
+        </div>
+    </div>
+    <!--第三条煤炭质量要求-->
+    <div class="layui-form-item">
+        <p class="title">第三条煤炭质量要求</p>
+        <label class="layui-form-label required">3.1质量要求：</label>
+        <div class="layui-input-block">
+            <p class="text-main">乙方所提供的煤炭应符合甲方所供煤炭之电站锅炉设计和适烧煤质的要求。</p>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <p class="text-main">3.2乙方所供煤炭中不得含有任何对卸输煤设施、煤炭制粉系统及燃煤设备造成意外损坏的物质。</p>
+    </div>
+    <!--第四条煤炭结算总价格价格-->
+    <div class="layui-form-item">
+        <p class="title">第四条煤炭结算总价格</p>
+        <label class="layui-form-label required">4.1结算价格=</label>
         <div class="layui-input-block">
             <input type="number" name="total" placeholder="请输入产品总价" autocomplete="off" class="layui-input"
-                   lay-verify="len" id="he"
-                   maxlength="100">元
+                   lay-verify="len" id="he" maxlength="100" style="display: inline-block;">元。
+            <span>（煤炭单价+运费+装车费）*总数量（煤炭增值税13%、装车费5元/吨、运费100元/吨、卸车费5元/吨）</span>
         </div>
     </div>
     <div class="layui-form-item">
+        <p class="text-main">4.2乙方向甲方销售质量符合第3.1条所述“煤炭质量要求”的基准价格确定的原则，价格确定原则按照结算价格为准。</p>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">4.3 基本价格︰</label>
+        <div class="layui-input-block">
+            <p class="text-main">买卖双方确认供货量及价格。</p>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <p class="text-main">4.4其余质量指标暂不考核。</p>
+    </div>
+    <div class="layui-form-item">
+        <p class="text-main">4.5各项扣款累加计算，由于乙方所供煤炭质量原因造成装卸作业单位或使用单位不良后果时，甲方有权要求乙方赔偿经济损失，并承担其它法律责任。</p>
+    </div>
+    <!--    第五条其他违约责任-->
+    <div class="layui-form-item">
+        <p class="title">第五条其他违约责任</p>
+        <p class="text-main">5.1乙方应按照双方确认的月供应数量提供符合本合同质量要求的煤炭，如因乙方提供的煤炭不符合本合同质量要求，
+            而导致由甲方提供煤炭的发电有限责任公司(电厂)缺煤停机或造成异常损害的，乙方应承担由此造成的经济损失。</p>
+    </div>
+    <div class="layui-form-item">
+        <p class="text-main">5.2如甲乙双方在质检或数量核定过程中发生任何弄虚作假行为，另一方有权立即终止合同，并有权组织各方对供应
+            煤炭在直接到达地进行复检﹐以复检结果取代原交接检验结果作为该批煤炭按质计价依据。</p>
+    </div>
+    <div class="layui-form-item">
+        <p class="text-main">5.3乙方有义务向甲方提供每车次煤炭的各项装车数据报告，以供甲方对该批煤炭的情况作详细了解。</p>
+    </div>
+    <!--    第六条不可抗力-->
+    <div class="layui-form-item">
+        <p class="title">第六条不可抗力</p>
+        <p class="text-main">因地震、雷电、火灾、水灾、台风等人力不可抗拒的因素导致一方不能履行合同，受影响一方应立即通知对方当事人，
+            并积极采取补救措施。在受不可抗力影响的范围内，有关当事人可免除其责任。</p>
+    </div>
+    <div class="layui-form-item" style="margin-top: 3%">
         <label class="layui-form-label required">合同有效期范围</label>
         <div class="layui-input-inline">
             <input autocomplete="off" name="effectiveTime" id="effectiveTime" class="layui-input" placeholder="合同有效开始日">
@@ -90,7 +186,7 @@
                    placeholder="合同有效截止日">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="margin: 2% 0% 0% 20%;">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="addSubmit">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>

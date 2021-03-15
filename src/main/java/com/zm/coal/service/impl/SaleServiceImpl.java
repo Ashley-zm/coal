@@ -32,14 +32,39 @@ public class SaleServiceImpl extends ServiceImpl<SaleMapper, Sale> implements Sa
         return baseMapper.salePage(page, wrapper);
     }
 
+    /**
+     * 产品的总销售量、总销售额、
+     * @return
+     */
+    @Override
+    public List<Sale> echarsListAll() {
+        return baseMapper.echarsListSelectAll();
+    }
 
+    /**
+     * 日纳税-利润
+     * @return
+     */
     @Override
     public List<Sale> echarsList() {
         return baseMapper.echarsListSelect();
     }
 
+    /**
+     * 产品各种类的月销售量
+     * @return
+     */
     @Override
-    public List<Sale> echarsListAll() {
-        return baseMapper.echarsListSelectAll();
+    public List<Sale> echarsListMonth() {
+        return baseMapper.echarsListSelectMonth();
+    }
+
+    /**
+     * 产品各种类的年销售量
+     * @return
+     */
+    @Override
+    public List<Sale> echarsListYear() {
+        return baseMapper.echarsListSelectYear();
     }
 }
