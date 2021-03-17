@@ -4,51 +4,57 @@
 <head>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+	<style>
+		.layui-form-mid {
+			color: #6b6b6b;
+		}
+
+	</style>
 </head>
 
 <body>
-	<div class="layui-form"  th:object="${account}">
+	<div class="layui-form"  th:object="${account}" style="padding: 0% 17%;">
 		<div class="layui-form-item">
-			<label class="layui-form-label">用户名</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label">用户名：</label>
+			<div class="layui-input-inline">
 				<div class="layui-form-mid" th:text="*{username}"></div>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">真实姓名</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label">真实姓名：</label>
+			<div class="layui-input-inline">
 				<div class="layui-form-mid" th:text="*{realName}"></div>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">角色</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label">角色：</label>
+			<div class="layui-input-inline">
 				<div class="layui-form-mid" th:text="*{roleName}"></div>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">性别</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label">性别：</label>
+			<div class="layui-input-inline">
 				<div class="layui-form-mid" th:text="*{sex}"></div>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">邮箱</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label">邮箱：</label>
+			<div class="layui-input-inline">
 				<div class="layui-form-mid" th:text="*{email}"></div>
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">创建时间</label>
+			<label class="layui-form-label">创建时间：</label>
 			<div class="layui-form-mid"  th:text="*{#temporals.format(createTime,'yyyy-MM-dd HH:mm:ss')}"></div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">修改时间</label>
+			<label class="layui-form-label">修改时间：</label>
 			<div class="layui-form-mid" th:text="*{#temporals.format(modifiedTime,'yyyy-MM-dd HH:mm:ss')}"></div>
 		</div>
-		<div class="layui-form-item">
+		<div class="layui-form-item" style="margin-left: 5%">
 			<div class="layui-input-block">
-				<button type="button" class="layui-btn layui-btn-primary" onclick="layer.close(layer.index)">关闭</button>
+				<button type="button" class="layui-btn layui-btn-normal" onclick="layer.close(layer.index)">关闭</button>
 			</div>
 		</div>
 	</div>

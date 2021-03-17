@@ -23,6 +23,13 @@ public interface SaleService  extends IService<Sale> {
     IPage<Sale> salePage(Page<Sale> page, Wrapper<Sale> wrapper);
 
     /**
+     * 根据 id 查询合同相关的信息
+     * @param id
+     * @return
+     */
+    Sale getSaleById(Long id);
+
+    /**
      *产品的总销售量、总销售额、
      * @return
      */

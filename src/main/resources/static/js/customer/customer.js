@@ -54,7 +54,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
 
     let customerId = data.customerId;
     if (layEvent === 'detail') { //查看
-        openlayer('/customer/toDetail/' + customerId, '客户詳情', '800px', '450px');
+        openlayer('/customer/toDetail/' + customerId, '客户详情', '500px', '520px');
         console.log("查看");
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
@@ -64,7 +64,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         // console.log(customerId);
-        openlayer('/customer/toUpdate/' + customerId, '修改客户', '800px', '450px');
+        openlayer('/customer/toUpdate/' + customerId, '修改客户', '800px', '420px');
         layui.form.render();
         mySubmit('updateSubmit', 'PUT')
     }
@@ -89,7 +89,7 @@ function query() {
  * 进入新增页
  */
 function toAdd() {
-    openlayer('/customer/toAdd', '新增客户', '800px', '450px');
+    openlayer('/customer/toAdd', '新增客户', '800px', '400px');
     //渲染radio
     layui.form.render();
     mySubmit('addSubmit', 'POST');

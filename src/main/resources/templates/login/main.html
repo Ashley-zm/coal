@@ -51,19 +51,22 @@
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
             <ul class="layui-nav layui-nav-tree" lay-filter="test">
                 <li class="layui-nav-item layui-nav-itemed" th:each="resource:${resource}">
+                    <i class="layui-icon layui-icon-set"
+                       style="font-size: 18px; color: #ffffff; float: left; margin-left: 10px;"></i>
                     <a class="" href="javascript:;" th:text="${resource.resourceName}"></a>
                     <dl class="layui-nav-child" th:if="${resource.subs} ne null" th:each="sub:${resource.subs}">
-                        <dd><a
-                                th:href="'javascript:showTab(\''+${sub.url}+'\',\''+${sub.resourceName}+'\','+${sub.resourceId}+');'"
-                                th:text="${sub.resourceName}"></a></dd>
+                        <dd>
+                            <a th:href="'javascript:showTab(\''+${sub.url}+'\',\''+${sub.resourceName}+'\','+${sub.resourceId}+');'"
+                               th:text="${sub.resourceName}"> </a>
+                        </dd>
                     </dl>
                 </li>
-<!--                <li class="layui-nav-item">-->
-<!--                    <a href="">-->
-<!--                        <i class="layui-icon layui-icon-list"></i>-->
-<!--                        <span>销售规则&商品简介</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+                <!--                <li class="layui-nav-item">-->
+                <!--                    <a href="">-->
+                <!--                        <i class="layui-icon layui-icon-list"></i>-->
+                <!--                        <span>销售规则&商品简介</span>-->
+                <!--                    </a>-->
+                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -99,15 +102,15 @@
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/js/login/main.js}"></script>
 <script>
-    layui.use('carousel', function(){
+    layui.use('carousel', function () {
         var carousel = layui.carousel;
         //建造实例
         carousel.render({
             elem: '#test1'
-            ,width: '100%' //设置容器宽度
-            ,arrow: 'always' //始终显示箭头
+            , width: '100%' //设置容器宽度
+            , arrow: 'always' //始终显示箭头
             //,anim: 'updown' //切换动画方式
-            ,interval:3000
+            , interval: 3000
         });
     });
 </script>

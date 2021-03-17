@@ -53,7 +53,7 @@
     var pCount = [];//产品销售总量集合
     for (let i = 0; i < echarsList.data.length; i++) {
         console.log(echarsList.data[i]);
-        pName.push(echarsList.data[i].productName);
+        pName.push(echarsList.data[i].productName.substring(0,echarsList.data[i].productName.lastIndexOf("(")));
         pCount.push(echarsList.data[i].amount);
     }
     console.log(pName);
@@ -64,6 +64,16 @@
             text: '煤炭各种类总销售量',
             subtext: '各产品销售总量',
             left: 'center'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {
+                    show:true,
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                }
+            }
         },
         tooltip: {
             trigger: 'item'

@@ -47,4 +47,11 @@ public interface SaleMapper extends BaseMapper<Sale> {
      * @return
      */
     List<Sale> echarsListSelectYear();
+
+    /**
+     * 根据 id 查询合同相关的信息
+     * @param id
+     * @return
+     */
+    Sale selectSaleById(Long id);
 }

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+</head>
+<body>
+<form class="layui-form " id="updateForm"  th:action="@{/product}" th:object="${product}"
+      style="margin-top: 20px;margin-left: 4%">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称：</label>
+        <div class="layui-input-inline">
+            <input type="hidden" name="accountId" th:value="*{productId}">
+            <input type="text" name="username" autocomplete="off" class="layui-input" lay-verify="required"
+                   th:value="*{productName}" maxlength="20">
+        </div>
+        <label class="layui-form-label required" style="width: 90px">产品单价</label>
+        <div class="layui-input-inline">
+            <input type="text" name="ptotal" autocomplete="off" class="layui-input" lay-verify="number" maxlength="20"
+                   th:value="*{price}">
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-top: 30px;margin-left: 18%">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="updateSubmit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

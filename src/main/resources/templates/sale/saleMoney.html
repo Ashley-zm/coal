@@ -72,6 +72,16 @@
                 type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             }
         },
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {
+                    show:true,
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                }
+            }
+        },
         xAxis: {
             type: 'value',
             axisLabel: {

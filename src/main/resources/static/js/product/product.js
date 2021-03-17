@@ -18,8 +18,17 @@ var tableIns = table.render({
     },
     cols: [[//表头
         {field: 'productName', title: '产品名称', width: '20%', align: 'center'},
-        {field: 'ptotal', title: '产品总数量(吨)', width: '20%', align: 'center'},
-        {field: 'price', title: '产品单价(元/吨)', width: '20%', align: 'center'},
+        {
+            field: 'ptotal', title: '产品总数量(吨)', width: '20%', align: 'center', templet: function (t) {
+                return t.ptotal + " 吨";
+            }
+        },
+        {
+            field: 'price', title: '产品单价(元/吨)', width: '20%', align: 'center', templet: function (p) {
+                return p.price + " 元";
+
+            }
+        },
         {
             field: 'pStatus', title: '库存状态', width: '20%', align: 'center',
             templet: function (p) {
@@ -51,9 +60,9 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
     var tr = obj.tr; //获得当前行 tr 的 DOM 对象（如果有的话）
 
-    let customerId = data.customerId;
+    let productId = data.productId;
     if (layEvent === 'detail') { //查看
-        openlayer('/product/toDetail/' + productId, '查看客户詳情', '800px', '450px');
+        openlayer('/product/toDetail/' + productId, '查看产品详情', '360px', '260px');
         console.log("查看");
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {
@@ -63,9 +72,9 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
         });
     } else if (layEvent === 'edit') { //编辑
         // console.log(customerId);
-        openlayer('/product/toUpdate/' + productId, '修改产品信息', '800px', '450px');
+        openlayer('/product/toUpdate/' + productId, '修改产品信息', '700px', '200px');
         layui.form.render();
-        mySubmit('updateSubmit', 'PUT')
+        mySubmit('updateSubmit', 'PUT');
     }
 });
 

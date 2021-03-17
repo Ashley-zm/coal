@@ -86,5 +86,53 @@ public class ProductController {
         return ResultUtil.buildR(productService.updateById(product));
     }
 
+    /**
+     * 修改产品页面，通过id查询来渲染产品更新页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("toUpdate/{id}")
+    public String toUpdate(@PathVariable Long id ,Model model){
+        Product product = productService.getById(id);
+        model.addAttribute("product",product);
+        return "product/productUpdate";
+    }
+
+    /**
+     * 修改产品的信息，修改产品的名称和单价，总数量也可以修改
+     * @param product
+     * @return
+     */
+    @PutMapping
+    @ResponseBody
+    public R<Object> update(@RequestBody Product product){
+        return ResultUtil.buildR(productService.updateById(product));
+    }
+
+    /**
+     * 删除产品
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public R<Object> delete(@PathVariable Long id){
+        return ResultUtil.buildR(productService.removeById(id));
+    }
+
+    /**
+     * 进入详情页
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("toDetail/{id}")
+    public String toDetail(@PathVariable Long id,Model model){
+        Product product = productService.getProductById(id);
+        model.addAttribute("product",product);
+        return  "product/productDetail";
+    }
+
 
 }

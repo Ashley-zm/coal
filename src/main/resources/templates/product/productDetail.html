@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/webjars/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/public.css}">
+    <style>
+        .layui-form-mid {
+            color: #6b6b6b;
+        }
+        .unit{
+            color: #6b6b6b;
+            line-height: 35px;
+        }
+
+    </style>
+</head>
+<body>
+<form class="layui-form " th:object="${product}" style="padding: 0% 4%;">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品名称：</label>
+        <div class="layui-input-inline">
+            <div class="layui-form-mid" th:text="*{productName}"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">产品单价：</label>
+        <div class="layui-input-inline">
+            <div class="layui-form-mid" th:text="*{price}"></div>
+            <span class="unit">元</span>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required" style="width: 90px;">产品总库存：</label>
+        <div class="layui-input-inline">
+            <div class="layui-form-mid" th:text="*{PTotal}"></div>
+            <span class="unit">吨</span>
+        </div>
+    </div>
+    <div class="layui-form-item" style="margin-left: 5%">
+        <div class="layui-input-block">
+            <button type="button" class="layui-btn layui-btn-normal" onclick="layer.close(layer.index)">关闭</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>

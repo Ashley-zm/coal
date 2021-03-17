@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<form class="layui-form" id="updateForm" th:action="@{/customer}" th:object="${customer}">
+<form class="layui-form" id="updateForm" th:action="@{/customer}" th:object="${customer}" style="margin-top: 32px;">
     <div class="layui-form-item">
-        <label class="layui-form-label">公司名称</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">公司名称</label>
+        <div class="layui-input-inline">
             <input type="hidden" name="customerId" th:value="*{customerId}">
             <input type="text" name="companyName" placeholder="请输入公司名称"
                    autocomplete="off" class="layui-input" lay-verify="required" maxlength="50"
@@ -15,16 +15,14 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">真实姓名</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">真实姓名</label>
+        <div class="layui-input-inline">
             <input type="text" name="realName" placeholder="请输入姓名"
                    autocomplete="off" class="layui-input" lay-verify="required" maxlength="50"
                    th:value="*{customerName}">
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">性别</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">性别</label>
+        <div class="layui-input-inline">
             <input type="radio" name="sex" value="男" title="男"
                    th:checked="*{sex=='男'}"> <input
                 type="radio" name="sex" value="女" title="女"
@@ -32,38 +30,43 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">年龄</label>
-        <div class="layui-input-block">
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">年龄</label>
+        <div class="layui-input-inline">
             <input type="text" name="age" placeholder="请输入年龄" autocomplete="off"
                    class="layui-input" lay-verify="number" maxlength="3"
                    th:value="*{age}">
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">邮箱</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">邮箱</label>
+        <div class="layui-input-inline">
             <input type="text" name="email" placeholder="请输入邮箱"
                    autocomplete="off" class="layui-input" lay-verify="email" maxlength="100"
                    th:value="*{email}">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">手机号码</label>
-        <div class="layui-input-block">
+
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">手机号码</label>
+        <div class="layui-input-inline">
             <input type="text" name="phone" placeholder="手机号码"
                    autocomplete="off" class="layui-input" lay-verify="phone" maxlength="11"
                    th:value="*{phone}">
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">地址</label>
-        <div class="layui-input-block">
+        <label class="layui-form-label required">地址</label>
+        <div class="layui-input-inline">
             <input type="text" name="address" placeholder="地址"
                    autocomplete="off" class="layui-input" maxlength="200"
                    th:value="*{address}">
         </div>
     </div>
     <div class="layui-form-item">
+
+    </div>
+    <div class="layui-form-item" style="margin-top: 40px;margin-left: 20%">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="updateSubmit">立即提交</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>

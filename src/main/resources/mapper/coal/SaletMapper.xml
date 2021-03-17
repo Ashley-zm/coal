@@ -101,4 +101,20 @@
         where date_format(leave_time,'%Y')=date_format(curtime(),'%Y')
         GROUP BY t.product_id;
     </select>
+<!--    根据 id 查询合同相关的信息-->
+    <select id="selectSaleById" resultType="com.zm.coal.entity.Sale">
+        SELECT
+            c.contract_name,
+            p.product_name,
+            c.amount,
+            c.total,
+            p.price,
+            s.*
+        from sale s
+        INNER JOIN contract c
+        ON c.contract_id=s.contract_id
+        INNER JOIN product p
+        ON p.product_id=c.product_id
+        WHERE s.sale_id=#{id}
+    </select>
 </mapper>

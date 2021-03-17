@@ -21,7 +21,7 @@ var tableIns = table.render({
     cols: [[//表头
         {type: 'checkbox', fixed: 'left'},
         {field: 'contractName', title: '合同名称', align: 'center', width: 160},
-        {field: 'productName', title: '产品名称', align: 'center', width: 100},
+        {field: 'productName', title: '产品名称', align: 'center', width: 110},
         {
             field: 'amount', title: '总数量', sort: true, align: 'center', width: 90, templet: function (a) {
                 return a.amount + '吨'
@@ -33,7 +33,7 @@ var tableIns = table.render({
             }
         },
         {
-            field: 'total', title: '总价', sort: true, align: 'center', width: 90, templet: function (a) {
+            field: 'total', title: '总价', sort: true, align: 'center', width: 100, templet: function (a) {
                 a.total = a.total / 10000;
                 return a.total + '万元';
             }
@@ -83,7 +83,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
 
     let saleId = data.saleId;
     if (layEvent === 'detail') { //查看
-        openlayer('/sale/toDetail/' + saleId, '客户詳情', '800px', '450px');
+        openlayer('/sale/toDetail/' + saleId, '出厂订单详情', '700px', '470px');
         console.log("查看");
     } else if (layEvent === 'del') { //删除
         layer.confirm('真的删除行么', function (index) {

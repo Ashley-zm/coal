@@ -20,13 +20,13 @@
 
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-md3" style="width: 20%; height: 500px; padding: 12% 2%">
+        <div class="layui-col-md3" style="width: 24%; height: 500px; padding: 14% 2%">
             <h1 class="site-h1" style="margin-bottom: 20px">煤炭各种类产品的<br>年销售量</h1>
             <blockquote style="padding: 15px;line-height: 30px;border-top: 5px solid #5470c6;">
                 根据出厂时间来统计本年度中各个产品的销售量
             </blockquote>
         </div>
-        <div id="main01" style="width: 80%;margin-top:30px;height:500px;" class="layui-col-md9"></div>
+        <div id="main01" style="width: 72%;margin-top:30px;height:500px;" class="layui-col-md9"></div>
     </div>
 </div>
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
@@ -52,7 +52,7 @@
     var pAmount = [];//产品数量
     for (let i = 0; i < echarsList.data.length; i++) {
         console.log(echarsList.data[i]);
-        pName.push(echarsList.data[i].productName);
+        pName.push(echarsList.data[i].productName.substring(0,echarsList.data[i].productName.lastIndexOf("(")));
         pAmount.push(echarsList.data[i].amount);
     }
     console.log(pName);
@@ -64,19 +64,29 @@
             subtext: '煤炭各种类产品的年销售量',
             left: 'center'
         },
-        xAxis: {
-            type: 'value',
-            axisLabel: {
-                formatter: '{value} 吨'
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {
+                    show:true,
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                }
             }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: [pName[0], pName[1], pName[2], pName[3], pName[4], pName[5],pName[6],pName[7],pName[8],pName[9],pName[10]]
         },
         tooltip: {
             trigger: 'axis',
         },
         yAxis: {
-            type: 'category',
-            boundaryGap: false,
-            data: [pName[0], pName[1], pName[2], pName[3], pName[4], pName[5],pName[6],pName[7],pName[8],pName[9],pName[10]]
+            type: 'value',
+            axisLabel: {
+                formatter: '{value} 吨'
+            }
 
         },
         series: [{
@@ -85,9 +95,13 @@
             type: 'line',
             smooth: true,
             lineStyle: {
-                width: 0
+                width: 0 //描边线
             },
-            showSymbol: false,
+            showSymbol: false,//显示值
+            label: {
+                show: true,
+                position: 'top'
+            },
             areaStyle: {
                 opacity: 0.8,
                 color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{

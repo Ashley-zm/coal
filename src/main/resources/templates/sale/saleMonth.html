@@ -51,7 +51,7 @@
     var pAmount = [];//产品数量
     for (let i = 0; i < echarsList.data.length; i++) {
         console.log(echarsList.data[i]);
-        pName.push(echarsList.data[i].productName);
+        pName.push(echarsList.data[i].productName.substring(0,echarsList.data[i].productName.lastIndexOf("(")));
         pAmount.push(echarsList.data[i].amount);
     }
     console.log(pName);
@@ -62,6 +62,16 @@
             text: '产品的月销售量',
             subtext: '煤炭各种类产品的月销售量',
             left: 'center'
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                saveAsImage: {
+                    show:true,
+                    excludeComponents :['toolbox'],
+                    pixelRatio: 2
+                }
+            }
         },
         tooltip: {
             trigger: 'axis',
@@ -76,15 +86,15 @@
             containLabel: true
         },
         xAxis: {
+            type: 'category',
+            data: [pName[0],pName[1],pName[2], pName[3],pName[4],pName[5],pName[6],pName[7],pName[8],pName[9],pName[10]]
+        },
+        yAxis: {
             type: 'value',
             boundaryGap: [0, 0.01],
             axisLabel: {
                 formatter: '{value} 吨'
             }
-        },
-        yAxis: {
-            type: 'category',
-            data: [pName[0],pName[1],pName[2], pName[3],pName[4],pName[5],pName[6],pName[7],pName[8],pName[9],pName[10]]
         },
         series: [
             {

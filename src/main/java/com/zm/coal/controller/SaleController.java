@@ -124,6 +124,30 @@ public class SaleController {
     }
 
     /**
+     * 进入详情页
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("toDetail/{id}")
+    public String toDetail(@PathVariable Long id,Model model){
+        Sale sale = saleService.getSaleById(id);
+        model.addAttribute("sale",sale);
+        return  "sale/saleDetail";
+    }
+
+    /**
+     * 删除出厂单
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/{id}")
+    @ResponseBody
+    public R<Object> delete(@PathVariable Long id){
+        return  ResultUtil.buildR(saleService.removeById(id));
+    }
+
+    /**
      * 总销售额
      * @param model
      * @return

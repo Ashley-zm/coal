@@ -33,6 +33,16 @@ public class SaleServiceImpl extends ServiceImpl<SaleMapper, Sale> implements Sa
     }
 
     /**
+     * 根据 id 查询合同相关的信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Sale getSaleById(Long id) {
+        return baseMapper.selectSaleById(id);
+    }
+
+    /**
      * 产品的总销售量、总销售额、
      * @return
      */

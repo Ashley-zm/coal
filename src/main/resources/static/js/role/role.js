@@ -46,18 +46,18 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
     let roleId = data.roleId;
     if (layEvent === 'detail') { //查看
         console.log(roleId);
-        openlayer('/role/toDetail/' + roleId, '角色详情','800px', '450px');
+        openlayer('/role/toDetail/' + roleId, '角色详情','400px', '360px');
         showTree('/role/listResource/' + roleId+'/1', 'resource', false);
 
     } else if (layEvent === 'del') { //删除
-        layer.confirm(function (index) {
-            // layer.close(index);
+        layer.confirm('真的删除行么',function (index) {
+            layer.close(index);
             //向服务端发送删除指令
             myDelete("/role/" + roleId);
         });
     } else if (layEvent === 'edit') { //编辑
         console.log(roleId);
-        openlayer('/role/toUpdate/' + roleId, '编辑角色','800px', '450px');
+        openlayer('/role/toUpdate/' + roleId, '编辑角色','740px', '400px');
         layui.form.render();
         showTree('/role/listResource/' + roleId+'/0', 'resource', true);
         mySubmit('updateSubmit', 'PUT', addIds);

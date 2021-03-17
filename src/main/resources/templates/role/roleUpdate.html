@@ -4,30 +4,30 @@
 <meta charset="UTF-8">
 </head>
 <body>
-	<form class="layui-form" id="updateForm" th:action="@{/role}" th:object="${role}">
+	<form class="layui-form" id="updateForm" th:action="@{/role}" th:object="${role}" style="margin-top: 32px;">
 		<div class="layui-form-item">
-			<label class="layui-form-label">角色名称</label>
+			<label class="layui-form-label required">角色名称</label>
 			<input type="hidden" name="roleId" th:value="*{roleId}">
-			<div class="layui-input-block">
+			<div class="layui-input-inline">
 				<input type="text" name="roleName" placeholder="角色名称"
 					   autocomplete="off"  class="layui-input" lay-verify="required" maxlength="50"
 					   th:value="*{roleName}">
 			</div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">备注</label>
-			<div class="layui-input-block">
+			<label class="layui-form-label required">备注</label>
+			<div class="layui-input-inline">
 				<input type="text" name="remark" placeholder="备注"
 					   autocomplete="off" th:value="*{remark}" class="layui-input" maxlength="200">
 			</div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">资源</label>
-			<div class="layui-input-block">
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label required">资源</label>
+			<div class="layui-input-inline">
 				<div id="resource"></div>
 			</div>
 		</div>
-		<div class="layui-form-item">
+		<div class="layui-form-item" style="margin-top: 40px;margin-left: 20%">
 			<div class="layui-input-block">
 				<button class="layui-btn" lay-submit lay-filter="updateSubmit">立即提交</button>
 				<button type="reset" class="layui-btn layui-btn-primary">重置</button>
