@@ -35,11 +35,5 @@ public interface ContractService extends IService<Contract> {
      */
     Contract getContractById(Long id);
 
-    /**
-     * 修改角色及角色所具有的产品、销售员、客户
-     * @param contract
-     * @return
-     */
-    boolean updateContract(Contract contract);
 
 }

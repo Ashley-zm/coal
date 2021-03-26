@@ -65,4 +65,9 @@ public class AccountServiceImpl extends ServiceImpl<AccountMapper, Account> impl
     public Account getAccountById(Long id) {
         return baseMapper.selectAccountById(id);
     }
+
+    // @Override
+    // public Account getAccountByRealName(String realName) {
+    //     return baseMapper.selectAccountByRealName(realName);
+    // }
 }

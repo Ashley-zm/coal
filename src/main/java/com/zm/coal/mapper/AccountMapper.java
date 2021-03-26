@@ -34,4 +34,6 @@ public interface AccountMapper extends BaseMapper<Account> {
      * @return
      */
     Account selectAccountById(Long id);
+
+    // Account selectAccountByRealName(String realName);
 }

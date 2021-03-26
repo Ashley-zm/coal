@@ -25,7 +25,7 @@ var tableIns = table.render({
     },
     cols: [[//表头
         {
-            field: 'contractId', title: '合同序号', align: 'center', width: 90,
+            field: 'contractId', title: '合同序号',sort: true, align: 'center', width: 110,
             templet: function (c) {
                 return "<a class='contract_Id'>" + c.contractId + "</a>"
             }
@@ -57,7 +57,6 @@ var tableIns = table.render({
             field: 'deleted',
             title: '合同状态', width: 240, align: 'center', fixed: 'right',
             templet: setState,
-
         },
         {
             field: 'factoryState',
@@ -213,7 +212,7 @@ function query() {
         where: { //设定异步数据接口的额外参数，任意设
             contractCode: $("#contractCode").val()
             , contractName: $("#contractName").val()
-            , accountId: $("#accountId").val()
+            // , realName: $("#realName").val()
             , createTimeRange: $("#createTimeRange").val()
             , status: $('[name=status]:checked').val()
         }
@@ -221,6 +220,11 @@ function query() {
             curr: 1 //重新从第 1 页开始
         }
     });
+    console.log("查询编号："+$("#contractCode").val());
+    console.log("查询合同名称："+$("#contractName").val());
+    // console.log("查询客户姓名："+$("#realName").val());
+    console.log("查询创建时间："+ $("#createTimeRange").val());
+    console.log("查询状态："+ $('[name=status]:checked').val());
 }
 
 /**

@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class Contract extends BaseEntity {
+// @EqualsAndHashCode(callSuper = true)
+public class Contract {
     private static final long serialVersionUID = 1L;
 
     /**
@@ -101,6 +101,13 @@ public class Contract extends BaseEntity {
     private double total;
 
     /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.INSERT)
+    private LocalDateTime createDate;
+
+    /**
      * 生效时间
      * 问题：Cannot deserialize value of type `java.time.LocalDateTime` from String
      */
@@ -119,4 +126,35 @@ public class Contract extends BaseEntity {
      * 是否出厂状态标识(0：否 ，1：是)
      */
     private Integer factoryState;
+    /**
+     * 合同状态
+     */
+    @TableField(exist = false)
+    private String status;
+
+    /**
+     * 修改时间
+     */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @TableField(fill = FieldFill.UPDATE)
+    private LocalDateTime modifiedTime;
+
+    /**
+     * 创建人
+     */
+    @TableField(fill = FieldFill.INSERT)
+    private Long createAccountId;
+
+    /**
+     * 修改人
+     */
+    @TableField(fill = FieldFill.UPDATE)
+    private Long modifiedAccountId;
+
+    /**
+     * 逻辑删除标识(0、否 1、是)
+     * @TableLogic在字段上加上这个注解再执行BaseMapper的删除方法时，删除方法会变成修改
+     */
+    @TableLogic
+    private Integer deleted;
 }

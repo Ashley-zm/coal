@@ -56,12 +56,4 @@ public class ContractServiceImpl extends ServiceImpl<ContractMapper, Contract> i
         return baseMapper.selectContractById(id);
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean updateContract(Contract contract) {
-        updateById(contract);
-        // Long contractId = contract.getContractId();
-        // contractMapper.delete(Wrappers.<Contract>lambdaQuery().eq(Contract::getProductId,));
-        return false;
-    }
 }

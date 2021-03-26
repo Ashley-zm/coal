@@ -32,8 +32,8 @@
 </div>
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/webjars/layui/layui.all.js}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<!--<script th:src="@{/js/echarts.min.js}"></script>-->
+<!--<script th:src="@{/js/echartsOrder.min.js}"></script>-->
+<script th:src="@{/js/echarts.min.js}"></script>
 <script th:inline="javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart = echarts.init(document.getElementById('main'));
@@ -52,6 +52,7 @@
     var pName = [];//产品名称集合
     var pTotal = [];//产品销售总量集合
     for (let i = 0; i < echarsList.data.length; i++) {
+        console.log("看日期=============")
         console.log(echarsList.data[i]);
         pName.push(echarsList.data[i].productName);
         pTotal.push(echarsList.data[i].total/10000);

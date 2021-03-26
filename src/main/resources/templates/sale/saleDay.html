@@ -32,8 +32,8 @@
 </div>
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/webjars/layui/layui.all.js}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<!--<script th:src="@{/js/echarts.min.js}"></script>-->
+<!--<script th:src="@{/js/echartsOrder.min.js}"></script>-->
+<script th:src="@{/js/echarts.min.js}"></script>
 <script th:inline="javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart01 = echarts.init(document.getElementById('main01'));
@@ -57,7 +57,8 @@
         pTaxes.push(parseFloat(echarsList.data[i].taxes).toFixed(2));
         pDate.push(echarsList.data[i].leaveTime.substring(0,10));
     }
-    console.log(pTaxes);
+
+    var length=pTaxes.length;
     console.log(pProfit);
     console.log(pDate);
 
@@ -70,7 +71,7 @@
         },
         xAxis: {
             type: 'category',
-            data: [pDate[0],pDate[1],pDate[2],pDate[3],pDate[4],pDate[5]]
+            data: [pDate[length-7],pDate[length-6],pDate[length-5],pDate[length-4],pDate[length-3],pDate[length-2],pDate[length-1]]
         },
         yAxis: {
             type: 'value',
@@ -88,7 +89,7 @@
                 emphasis: {
                     focus: 'series'
                 },
-                data: [pProfit[0],pProfit[1],pProfit[2],pProfit[3],pProfit[4],pProfit[5]],
+                data: [pProfit[length-7],pProfit[length-6],pProfit[length-5],pProfit[length-4],pProfit[length-3],pProfit[length-2],pProfit[length-1]],
                 type: 'line',
                 symbol: 'triangle',
                 symbolSize: 20,
@@ -105,7 +106,7 @@
             },
             {
                 name: '纳税',
-                data: [pTaxes[0],pTaxes[1],pTaxes[2],pTaxes[3],pTaxes[4],pTaxes[5]],
+                data: [pTaxes[length-7],pTaxes[length-6],pTaxes[length-5],pTaxes[length-4],pTaxes[length-3],pTaxes[length-2],pTaxes[length-1]],
                 type: 'line',
                 symbol: 'triangle',
                 emphasis: {

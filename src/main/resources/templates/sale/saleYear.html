@@ -20,19 +20,19 @@
 
 <div class="layui-container">
     <div class="layui-row">
-        <div class="layui-col-md3" style="width: 24%; height: 500px; padding: 14% 2%">
+        <div class="layui-col-md3" style="width: 30%; height: 500px; padding: 14% 2%">
             <h1 class="site-h1" style="margin-bottom: 20px">煤炭各种类产品的<br>年销售量</h1>
             <blockquote style="padding: 15px;line-height: 30px;border-top: 5px solid #5470c6;">
                 根据出厂时间来统计本年度中各个产品的销售量
             </blockquote>
         </div>
-        <div id="main01" style="width: 72%;margin-top:30px;height:500px;" class="layui-col-md9"></div>
+        <div id="main01" style="width: 70%;margin-top:30px;height:500px;" class="layui-col-md9"></div>
     </div>
 </div>
 <script th:src="@{/webjars/jquery/jquery.js}"></script>
 <script th:src="@{/webjars/layui/layui.all.js}"></script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-<!--<script th:src="@{/js/echarts.min.js}"></script>-->
+<!--<script th:src="@{/js/echartsOrder.min.js}"></script>-->
+<script th:src="@{/js/echarts.min.js}"></script>
 <script th:inline="javascript">
     // 基于准备好的dom，初始化echarts实例
     var myChart01 = echarts.init(document.getElementById('main01'));

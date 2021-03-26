@@ -84,7 +84,7 @@ table.on('tool(userTable)', function (obj) { //注：tool 是工具条事件名�
 function query() {
     tableIns.reload({
         where: { //设定异步数据接口的额外参数，任意设
-            realName: $("#productName").val()
+            productName: $("#productName").val()
         }
         , page: {
             curr: 1 //重新从第 1 页开始

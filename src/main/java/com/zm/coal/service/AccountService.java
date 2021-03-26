@@ -31,4 +31,6 @@ public interface AccountService extends IService<Account> {
      * @return
      */
     Account getAccountById(Long id);
+
+    // Account getAccountByRealName(String realName);
 }

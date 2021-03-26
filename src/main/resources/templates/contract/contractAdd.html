@@ -202,7 +202,7 @@
      *     类型：String，默认值：focus，如果绑定的元素非输入框，则默认事件为：click
      */
     laydate.render({
-        elem: '#createTime'
+        elem: '#createDate'
         , type: 'datetime'
         , trigger: 'click'
         , format: 'yyyy-MM-dd HH:mm:ss'
@@ -260,7 +260,14 @@
      */
     function sum() {
         if ($("#dan").val() != '' && $("#zong").val() != '') {
-            document.getElementById("he").value = ($("#dan").val() + 110) * $("#zong").val();
+            let jia=parseInt( $("#dan").val()) + 110;
+            let he=jia * parseInt($("#zong").val());
+            document.getElementById("he").value =he;
+
+            console.log("产品单价是:"+$("#dan").val());
+            console.log("加上110后的价格："+jia);
+            console.log("总数量：" +$("#zong").val())
+            console.log(":"+he);
         }
     }
 

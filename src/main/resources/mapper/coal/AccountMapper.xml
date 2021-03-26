@@ -20,4 +20,13 @@
         on a.role_id = r.role_id
         where a.account_id=#{id} and a.deleted=0
     </select>
+<!--    <select id="selectAccountByRealName" resultType="com.zm.coal.entity.Account">-->
+<!--        select-->
+<!--            a.*,-->
+<!--            r.role_name-->
+<!--        from account a inner join role r-->
+<!--        on a.role_id = r.role_id-->
+<!--        where a.real_name=#{realName} and a.deleted=0-->
+
+<!--    </select>-->
 </mapper>
